@@ -6,6 +6,14 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <UseWindowsForms>True</UseWindowsForms>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Model\" />
+      <Folder Include="MVVM\" />
+      <Folder Include="ViewModel\" />
+      <Folder Include="View\" />
+    </ItemGroup>
 
 </Project>
