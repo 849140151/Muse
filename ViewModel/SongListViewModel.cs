@@ -1,19 +1,18 @@
-﻿using System.IO;
+﻿using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
+using Muse.UI.Model;
+using Muse.UI.MVVM;
 using WinForms = System.Windows.Forms;
-namespace Muse.UI;
 
-/// <summary>
-///     Interaction logic for MainWindow.xaml
-/// </summary>
-public partial class MainWindow : Window
+namespace Muse.UI.ViewModel;
+
+public class SongListViewModel : ViewModelBase
 {
-    public MainWindow()
-    {
-        InitializeComponent();
-    }
+    public ObservableCollection<Song> Songs { get; set; } = [];
 
-    public void btn_SelectFolder_Click(object sender, RoutedEventArgs e)
+    public RelayCommand SelectFolderCommand => new RelayCommand(execute => SelectFolder());
+    private void SelectFolder()
     {
         // Get all the audio files in the selected folder
         using (var dialog = new FolderBrowserDialog())
@@ -28,7 +27,10 @@ public partial class MainWindow : Window
                 {
                     foreach (string song in files)
                     {
-                        SongList.Items.Add(Path.GetFileNameWithoutExtension(song));
+                        Songs.Add(new Song
+                        {
+                            Title = Path.GetFileNameWithoutExtension(song)
+                        });
                     }
                 }
                 else
@@ -36,6 +38,27 @@ public partial class MainWindow : Window
                     System.Windows.MessageBox.Show("No audio in this folder.", "Lack of audio", MessageBoxButton.OK);
                 }
             }
+        }
+    }
+
+
+    public RelayCommand PrintSongCommand => new RelayCommand(execute => PrintSong(), canExecute=> SelectSong != null);
+
+
+    private void PrintSong()
+    {
+        Console.WriteLine(SelectSong.Title);
+    }
+
+    public Song selectSong;
+
+    public Song SelectSong
+    {
+        get => selectSong;
+        set
+        {
+            selectSong = value;
+            OnPropertyChanged();
         }
     }
 

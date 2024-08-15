@@ -4,13 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Muse.UI"
+        xmlns:songlist="clr-namespace:Muse.UI.View"
         mc:Ignorable="d"
         Title="Muse" Height="450" Width="800">
     <Grid>
-        <StackPanel>
-            <Button Name="AddFile" Content="Select Folder" Click="btn_SelectFolder_Click" Width="150" Height="30"/>
-            <ListView Name="SongList" Width="1000" Height="400"/>
-        </StackPanel>
+        <songlist:SongList/>
 
 
     </Grid>

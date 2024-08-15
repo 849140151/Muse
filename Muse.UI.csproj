@@ -10,10 +10,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Model\" />
-      <Folder Include="MVVM\" />
-      <Folder Include="ViewModel\" />
-      <Folder Include="View\" />
+      <Page Update="View\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
     </ItemGroup>
 
 </Project>
