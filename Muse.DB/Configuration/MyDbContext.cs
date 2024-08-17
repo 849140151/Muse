@@ -12,7 +12,9 @@ public class MyDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-        optionsBuilder.UseSqlite("Data Source=Muse.sqlite;");
+        string slnFolder = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\.."));
+        string dbPath = Path.Combine(slnFolder, "Muse.DB", "Muse.sqlite");
+        optionsBuilder.UseSqlite($"Data Source={dbPath};");
     }
 
 }
