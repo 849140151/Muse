@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
+using Muse.DB.Configuration;
 using Muse.UI.MVVM;
 using Muse.DB.Model;
 using WinForms = System.Windows.Forms;
@@ -9,7 +10,24 @@ namespace Muse.UI.ViewModel;
 
 public class SongListViewModel : ViewModelBase
 {
-    public ObservableCollection<SongBasic> Songs { get; set; } = [];
+    public ObservableCollection<SongBasic> SongBasic { get; set; } = [];
+
+    public SongListViewModel()
+    {
+        string slnFolder = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\.."));
+        string dbPath = Path.Combine(slnFolder, "Muse.DB", "Muse.sqlite");
+        Console.WriteLine(slnFolder);
+        Console.WriteLine($"dbPath: {dbPath}");
+
+        // using (MyDbContext db = new MyDbContext())
+        // {
+        //     var songBasics = db.SongBasic.Where(s => s.Performers == "tuki1").ToList();
+        //     foreach (SongBasic songBasic in songBasics)
+        //     {
+        //         SongBasic.Add(songBasic);
+        //     }
+        // }
+    }
 
     public RelayCommand SelectFolderCommand => new RelayCommand(execute => SelectFolder());
     private void SelectFolder()
@@ -27,7 +45,7 @@ public class SongListViewModel : ViewModelBase
                 {
                     foreach (string song in files)
                     {
-                        Songs.Add(new SongBasic()
+                        SongBasic.Add(new SongBasic()
                         {
                             Title = Path.GetFileNameWithoutExtension(song)
                         });

@@ -35,7 +35,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <ProjectReference Include="Muse.DB\Muse.DB.csproj" />
+      <ProjectReference Include="..\Muse.DB\Muse.DB.csproj" />
     </ItemGroup>
     
     <ItemGroup>
