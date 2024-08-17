@@ -1,15 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
-using Muse.UI.Model;
 using Muse.UI.MVVM;
+using Muse.DB.Model;
 using WinForms = System.Windows.Forms;
 
 namespace Muse.UI.ViewModel;
 
 public class SongListViewModel : ViewModelBase
 {
-    public ObservableCollection<Song> Songs { get; set; } = [];
+    public ObservableCollection<SongBasic> Songs { get; set; } = [];
 
     public RelayCommand SelectFolderCommand => new RelayCommand(execute => SelectFolder());
     private void SelectFolder()
@@ -27,7 +27,7 @@ public class SongListViewModel : ViewModelBase
                 {
                     foreach (string song in files)
                     {
-                        Songs.Add(new Song
+                        Songs.Add(new SongBasic()
                         {
                             Title = Path.GetFileNameWithoutExtension(song)
                         });
@@ -48,11 +48,12 @@ public class SongListViewModel : ViewModelBase
     private void PrintSong()
     {
         Console.WriteLine(SelectSong.Title);
+        SongDetail detail = new SongDetail();
     }
 
-    public Song selectSong;
+    public SongBasic selectSong;
 
-    public Song SelectSong
+    public SongBasic SelectSong
     {
         get => selectSong;
         set

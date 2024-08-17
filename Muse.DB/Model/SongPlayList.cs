@@ -1,4 +1,4 @@
-﻿namespace Muse.UI.Model;
+﻿namespace Muse.DB.Model;
 
 public class SongPlayList
 {

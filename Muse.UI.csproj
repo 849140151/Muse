@@ -15,12 +15,14 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
+      <Page Remove="Muse.ConsoleControl\**" />
     </ItemGroup>
 
     <ItemGroup>
       <None Update="Muse.sqlite">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Remove="Muse.ConsoleControl\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -30,6 +32,18 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="Muse.DB\Muse.DB.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="Muse.ConsoleControl\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <EmbeddedResource Remove="Muse.ConsoleControl\**" />
     </ItemGroup>
 
 </Project>
