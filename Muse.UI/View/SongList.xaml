@@ -15,7 +15,7 @@
                         Width="150" Height="30" HorizontalAlignment="Right"/>
             </Grid>
 
-            <DataGrid ItemsSource="{Binding Songs}" SelectedItem="{Binding SelectSong}"
+            <DataGrid ItemsSource="{Binding SongBasic}" SelectedItem="{Binding SelectSong}"
                       CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="歌曲" Binding="{Binding Title}" Width="5*"/>
