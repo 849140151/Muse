@@ -20,7 +20,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="歌曲" Binding="{Binding Title}" Width="5*"/>
                     <DataGridTextColumn Header="歌手" Binding="{Binding Performers}" Width="5*"/>
-                    <DataGridTextColumn Header="时长" Binding="{Binding Duration}" Width="5*"/>
+                    <DataGridTextColumn Header="时长" Binding="{Binding FormattedDuration}" Width="5*"/>
                     <DataGridTextColumn Header="专辑" Binding="{Binding Album}" Width="5*"/>
                 </DataGrid.Columns>
             </DataGrid>
