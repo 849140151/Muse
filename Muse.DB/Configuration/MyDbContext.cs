@@ -17,4 +17,13 @@ public class MyDbContext : DbContext
         optionsBuilder.UseSqlite($"Data Source={dbPath};");
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
+
+        // // only assert the one who use configuration
+        // modelBuilder.ApplyConfiguration(new SongBasicConfig());
+    }
+
 }
