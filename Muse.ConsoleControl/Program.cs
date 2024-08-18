@@ -9,14 +9,6 @@ class Program
     {
         using ( MyDbContext context = new MyDbContext())
         {
-            SongBasic songBasic = new SongBasic
-            {
-                Performers = "tuki",
-                Title = "Bansanka",
-                Duration = "03:35"
-            };
-            context.SongBasic.Add(songBasic);
-            context.SaveChanges();
         }
     }
 }
