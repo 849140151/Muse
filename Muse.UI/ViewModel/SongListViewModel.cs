@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
+using Muse.AudioProcessor.SoundTrackOperator;
 using Muse.DB.Configuration;
 using Muse.UI.MVVM;
 using Muse.DB.Model;
@@ -28,26 +29,22 @@ public class SongListViewModel : ViewModelBase
         // Get all the audio files in the selected folder
         using (var dialog = new FolderBrowserDialog())
         {
-            if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+
+            List<string> audioFiles = AudioKnife.FilterAudioFiles(dialog.SelectedPath);
+            if (!audioFiles.Any())
             {
-                string[] audioExtensions = [".mp3", ".wav", ".flac", ".aac", ".m4a"];
-                List<string> files = Directory.EnumerateFiles(dialog.SelectedPath)
-                    .Where(file => audioExtensions.Contains(Path.GetExtension(file).ToLower()))
-                    .ToList();
-                if (files.Count != 0)
-                {
-                    foreach (string song in files)
-                    {
-                        SongBasic.Add(new SongBasic()
-                        {
-                            Title = Path.GetFileNameWithoutExtension(song)
-                        });
-                    }
-                }
-                else
-                {
-                    System.Windows.MessageBox.Show("No audio in this folder.", "Lack of audio", MessageBoxButton.OK);
-                }
+                System.Windows.MessageBox.Show("No audio in this folder.", "Lack of audio", MessageBoxButton.OK);
+                return;
+            }
+
+            IEnumerable<SongBasic?> newSongs = audioFiles
+                .Select(x => AudioKnife.ReadAudioTags(x))
+                .Where(x => x != null);
+
+            foreach (SongBasic? newSong in newSongs)
+            {
+                    SongBasic.Add(newSong ?? throw new InvalidOperationException());
             }
         }
     }
