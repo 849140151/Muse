@@ -40,7 +40,8 @@ public class SongListViewModel : ViewModelBase
 
             IEnumerable<SongBasic?> newSongs = audioFiles
                 .Select(x => AudioKnife.ReadAudioTags(x))
-                .Where(x => x != null);
+                .Where(x => x != null)
+                .Distinct(); // Remove duplicate songs, need to rewrite the Equals and GetHashCode methods of SongBasic
 
             foreach (SongBasic? newSong in newSongs)
             {
