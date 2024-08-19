@@ -8,12 +8,16 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <StackPanel>
-            <Grid>
-                <Button Content="Select Folder" Command="{Binding SelectFolderCommand}"
-                        Width="150" Height="30" HorizontalAlignment="Left"/>
-                <Button Content="Print Song" Command="{Binding PrintSongCommand}"
-                        Width="150" Height="30" HorizontalAlignment="Right"/>
-            </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Button Content="Select Folder" Command="{Binding SelectFolderCommand}"
+                            Width="150" Height="30" Margin="5"/>
+                    <Button Content="Save Song" Command="{Binding SaveSongCommand}"
+                            Width="150" Height="30" Margin="5"/>
+                    <Button Content="Delete Song" Command="{Binding DeleteSongCommand}"
+                            Width="150" Height="30" Margin="5"/>
+                    <Button Content="Print Song" Command="{Binding PrintSongCommand}"
+                            Width="150" Height="30" Margin="5"/>
+                </StackPanel>
 
             <DataGrid ItemsSource="{Binding SongBasic}" SelectedItem="{Binding SelectSong}"
                       CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
