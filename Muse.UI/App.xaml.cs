@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Muse.UI.ViewModel;
 using Win = System.Windows;
 
 
@@ -10,32 +10,29 @@ namespace Muse.UI;
 /// </summary>
 public partial class App : Win.Application
 {
-    public static IHost? AppHost { get; private set; }
-
     public App()
     {
-        AppHost = Host.CreateDefaultBuilder()
-           .ConfigureServices((hostContext, services) =>
-           {
-               services.AddSingleton<MainWindow>();
-
-           })
-           .Build();
+        Services = ConfigureServices();
     }
 
-    protected override async void OnStartup(Win.StartupEventArgs e)
+    public new static App Current => (App)Win.Application.Current;
+
+    public IServiceProvider Services { get; }
+
+    public static IServiceProvider ConfigureServices()
     {
-        await AppHost!.StartAsync();
-        var startupForm = AppHost.Services.GetRequiredService<MainWindow>();
-        startupForm.Show();
+        var services = new ServiceCollection();
+        services.AddSingleton<MainWindowViewModel>();
+        services.AddSingleton<MainWindow>(sp => new MainWindow{ DataContext = sp.GetService<MainWindowViewModel>() });
 
-        base.OnStartup(e);
+        return services.BuildServiceProvider();
     }
 
-    protected override async void OnExit(Win.ExitEventArgs e)
+    private void Application_Startup(object sender, Win.StartupEventArgs e)
     {
-        await AppHost!.StopAsync();
-        base.OnExit( e);
+        var mainWindow = Services.GetService<MainWindow>();
+        mainWindow!.Show();
     }
+
 
 }
