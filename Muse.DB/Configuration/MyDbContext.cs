@@ -9,12 +9,26 @@ public class MyDbContext : DbContext
 
     public DbSet<SongDetail> SongDetail { get; set; }
 
+
+    // For using DI
+    public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
+    {
+    }
+    // After the ctor above, need a whole new function for Database Migration
+    public MyDbContext() : base()
+    {
+    }
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        base.OnConfiguring(optionsBuilder);
-        string slnFolder = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\.."));
-        string dbPath = Path.Combine(slnFolder, "Muse.DB", "Muse.sqlite");
-        optionsBuilder.UseSqlite($"Data Source={dbPath};");
+        if (!optionsBuilder.IsConfigured)
+        {
+            base.OnConfiguring(optionsBuilder);
+            string slnFolder = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\.."));
+            string dbPath = Path.Combine(slnFolder, "Muse.DB", "Muse.sqlite");
+            optionsBuilder.UseSqlite($"Data Source={dbPath};");
+        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

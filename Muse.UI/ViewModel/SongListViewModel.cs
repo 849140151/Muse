@@ -11,6 +11,8 @@ namespace Muse.UI.ViewModel;
 
 public class SongListViewModel : ViewModelBase
 {
+    private readonly MyDbContext  _dbContext;
+    
     public ObservableCollection<SongBasic> SongBasic { get; set; }
 
     public SongBasic selectSong;
@@ -24,14 +26,14 @@ public class SongListViewModel : ViewModelBase
         }
     }
 
-    public SongListViewModel()
+    public SongListViewModel(MyDbContext dbContext)
     {
+        _dbContext = dbContext;
         // Select all songs from database to initialize the songlist
-        using (MyDbContext db = new MyDbContext())
-        {
-            var songBasics = db.SongBasic.ToList();
-            SongBasic = new ObservableCollection<SongBasic>(songBasics);
-        }
+
+        var songBasics =  _dbContext.SongBasic.ToList();
+        SongBasic = new ObservableCollection<SongBasic>(songBasics);
+
     }
 
     #region Selct a folder and get the songs in it
@@ -72,21 +74,20 @@ public class SongListViewModel : ViewModelBase
     private void SaveSong()
     {
         // saving the SongBasic to database
-        using (MyDbContext db = new MyDbContext())
-        {
-            // 获取数据库中已有的歌曲
-            var existingSongs = db.SongBasic.ToList();
-            var existingSongIds = new HashSet<int>(existingSongs.Select(s => s.SongBasicId));
 
-            // 过滤掉已存在的歌曲
-            var newSongs = SongBasic
-                .Where(song => !existingSongIds.Contains(song.SongBasicId))
-                .ToList();
+        // 获取数据库中已有的歌曲
+        var existingSongs =  _dbContext.SongBasic.ToList();
+        var existingSongIds = new HashSet<int>(existingSongs.Select(s => s.SongBasicId));
 
-            db.SongBasic.AddRange(newSongs);
-            db.SaveChanges();
-            // Todo: need to check the song if it exists in the database, if not, add it.
-        }
+        // 过滤掉已存在的歌曲
+        var newSongs = SongBasic
+            .Where(song => !existingSongIds.Contains(song.SongBasicId))
+            .ToList();
+
+         _dbContext.SongBasic.AddRange(newSongs);
+         _dbContext.SaveChanges();
+        // Todo: need to check the song if it exists in the database, if not, add it.
+
     }
 
     private bool CanSave()
@@ -103,15 +104,13 @@ public class SongListViewModel : ViewModelBase
     private void DeleteSong()
     {
         // saving the SongBasic to database
-        using (MyDbContext db = new MyDbContext())
-        {
-            // SongBasic.Remove(SelectSong);
-            // Find that sqlite can not delete cascade, but EF core can.
-            var tukiSongs = db.SongBasic.First(s => s.Performers == "tuki.");
-            db.Remove(tukiSongs);
-            db.SaveChanges();
 
-        }
+        // SongBasic.Remove(SelectSong);
+        // Find that sqlite can not delete cascade, but EF core can.
+         _dbContext.SongBasic.Remove(SelectSong);
+         _dbContext.SaveChanges();
+        SongBasic.Remove(SelectSong);
+
     }
 
     #endregion
