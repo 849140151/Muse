@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Muse.UI.View;
 using Muse.UI.ViewModel;
 using Win = System.Windows;
 
@@ -22,6 +23,10 @@ public partial class App : Win.Application
     public static IServiceProvider ConfigureServices()
     {
         var services = new ServiceCollection();
+
+        services.AddSingleton<SongListViewModel>();
+        services.AddSingleton<SongList>();
+
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<MainWindow>();
 
