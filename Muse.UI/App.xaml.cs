@@ -23,7 +23,7 @@ public partial class App : Win.Application
     {
         var services = new ServiceCollection();
         services.AddSingleton<MainWindowViewModel>();
-        services.AddSingleton<MainWindow>(sp => new MainWindow{ DataContext = sp.GetService<MainWindowViewModel>() });
+        services.AddSingleton<MainWindow>();
 
         return services.BuildServiceProvider();
     }
