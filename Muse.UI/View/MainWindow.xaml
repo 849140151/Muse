@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="Muse" Height="450" Width="800">
     <Grid>
-        <ContentControl x:Name="SongList" />
+        <ContentControl Content="{Binding SongListViewModel}" />
 
     </Grid>
 </Window>

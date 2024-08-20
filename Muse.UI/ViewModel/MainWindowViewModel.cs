@@ -2,8 +2,10 @@
 
 public class MainWindowViewModel
 {
-    public MainWindowViewModel()
-    {
+    public SongListViewModel SongListViewModel { get; set; }
 
+    public MainWindowViewModel(SongListViewModel songListViewModel)
+    {
+        SongListViewModel = songListViewModel;
     }
 }

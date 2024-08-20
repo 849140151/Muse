@@ -6,11 +6,10 @@ namespace Muse.UI;
 
 public partial class MainWindow : Window
 {
-    public MainWindow(MainWindowViewModel mainWindowViewModel, SongList songList)
+    public MainWindow(MainWindowViewModel mainWindowViewModel)
     {
         InitializeComponent();
         DataContext = mainWindowViewModel;
 
-        SongList.Content = songList;
     }
 }

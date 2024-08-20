@@ -5,6 +5,11 @@ namespace Muse.UI.View;
 
 public partial class SongList : UserControl
 {
+    public SongList()
+    {
+        InitializeComponent();
+    }
+
     public SongList(SongListViewModel songListViewModel)
     {
         InitializeComponent();
