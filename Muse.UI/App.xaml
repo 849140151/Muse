@@ -8,6 +8,9 @@
         <DataTemplate DataType="{x:Type viewModel:SongListViewModel}">
             <view:SongList />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:PlayBarViewModel}">
+            <view:PlayBar />
+        </DataTemplate>
     </Application.Resources>
 </Application>
 

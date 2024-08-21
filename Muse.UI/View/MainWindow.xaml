@@ -7,6 +7,7 @@
         Title="Muse" Height="450" Width="800">
     <Grid>
         <ContentControl Content="{Binding SongListViewModel}" />
+        <ContentControl Content="{Binding PlayBarViewModel}"/>
 
     </Grid>
 </Window>

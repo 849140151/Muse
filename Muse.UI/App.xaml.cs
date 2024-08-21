@@ -35,6 +35,9 @@ public partial class App : Win.Application
         services.AddSingleton<SongListViewModel>();
         services.AddSingleton<SongList>();
 
+        services.AddSingleton<PlayBarViewModel>();
+        services.AddSingleton<PlayBar>();
+
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<MainWindow>();
 
