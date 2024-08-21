@@ -6,8 +6,13 @@
         mc:Ignorable="d"
         Title="Muse" Height="450" Width="800">
     <Grid>
-        <ContentControl Content="{Binding SongListViewModel}" />
-        <ContentControl Content="{Binding PlayBarViewModel}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ContentControl Content="{Binding SongListViewModel}" Grid.Row="0"/>
+        <ContentControl Content="{Binding PlayBarViewModel}" Grid.Row="1"/>
 
     </Grid>
 </Window>
