@@ -21,11 +21,10 @@
             </StackPanel>
 
             <DataGrid ItemsSource="{Binding SongBasic}" SelectedItem="{Binding SelectSong}"
-                      CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+                      CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" IsReadOnly="True">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
-                        <cmd:EventToCommand Command="{Binding OnSongDoubleClickCommand}"
-                                            CommandParameter="{Binding SelectSong, RelativeSource={RelativeSource Self}}" />
+                        <cmd:EventToCommand Command="{Binding OnSongDoubleClickCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <DataGrid.Columns>
@@ -37,8 +36,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="播放"
-                                        Command="{Binding DataContext.OnSongDoubleClickCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                        CommandParameter="{Binding}" />
+                                        Command="{Binding DataContext.OnSongDoubleClickCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
