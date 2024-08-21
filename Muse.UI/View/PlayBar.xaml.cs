@@ -10,9 +10,9 @@ public partial class PlayBar : UserControl
         InitializeComponent();
     }
 
-    public PlayBar(PlayBarViewModel playBarViewModel)
+    public PlayBar(PlayBarVM playBarVm)
     {
         InitializeComponent();
-        DataContext = playBarViewModel;
+        DataContext = playBarVm;
     }
 }

@@ -11,8 +11,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ContentControl Content="{Binding SongListViewModel}" Grid.Row="0"/>
-        <ContentControl Content="{Binding PlayBarViewModel}" Grid.Row="1"/>
+        <ContentControl Content="{Binding SongListVm}" Grid.Row="0"/>
+        <ContentControl Content="{Binding PlayBarVm}" Grid.Row="1"/>
 
     </Grid>
 </Window>

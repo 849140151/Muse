@@ -32,13 +32,13 @@ public partial class App : Win.Application
         services.AddDbContext<MyDbContext>(options => options.UseSqlite($"Data Source={dbPath}"));
 
 
-        services.AddSingleton<SongListViewModel>();
+        services.AddSingleton<SongListVM>();
         services.AddSingleton<SongList>();
 
-        services.AddSingleton<PlayBarViewModel>();
+        services.AddSingleton<PlayBarVM>();
         services.AddSingleton<PlayBar>();
 
-        services.AddSingleton<MainWindowViewModel>();
+        services.AddSingleton<MainWindowVM>();
         services.AddSingleton<MainWindow>();
 
         return services.BuildServiceProvider();

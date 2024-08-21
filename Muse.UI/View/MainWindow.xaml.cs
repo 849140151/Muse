@@ -6,10 +6,10 @@ namespace Muse.UI;
 
 public partial class MainWindow : Window
 {
-    public MainWindow(MainWindowViewModel mainWindowViewModel)
+    public MainWindow(MainWindowVM mainWindowVm)
     {
         InitializeComponent();
-        DataContext = mainWindowViewModel;
+        DataContext = mainWindowVm;
 
     }
 }

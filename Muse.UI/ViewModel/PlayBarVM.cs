@@ -2,7 +2,7 @@
 
 namespace Muse.UI.ViewModel;
 
-public class PlayBarViewModel : ViewModelBase
+public class PlayBarVM : ViewModelBase
 {
 
     private string? _songTitle;

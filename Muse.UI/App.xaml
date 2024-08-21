@@ -5,10 +5,10 @@
              xmlns:view="clr-namespace:Muse.UI.View"
              Startup="Application_Startup">
     <Application.Resources>
-        <DataTemplate DataType="{x:Type viewModel:SongListViewModel}">
+        <DataTemplate DataType="{x:Type viewModel:SongListVM}">
             <view:SongList />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:PlayBarViewModel}">
+        <DataTemplate DataType="{x:Type viewModel:PlayBarVM}">
             <view:PlayBar />
         </DataTemplate>
     </Application.Resources>

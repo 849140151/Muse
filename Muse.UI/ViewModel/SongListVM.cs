@@ -8,10 +8,10 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace Muse.UI.ViewModel;
 
-public class SongListViewModel : ViewModelBase
+public class SongListVM : ViewModelBase
 {
     private readonly MyDbContext _dbContext;
-    private readonly PlayBarViewModel _playBarViewModel;
+    private readonly PlayBarVM _playBarVm;
 
     public ObservableCollection<SongBasic> SongBasic { get; set; }
 
@@ -27,10 +27,10 @@ public class SongListViewModel : ViewModelBase
         }
     }
 
-    public SongListViewModel(MyDbContext dbContext, PlayBarViewModel playBarViewModel)
+    public SongListVM(MyDbContext dbContext, PlayBarVM playBarVm)
     {
         _dbContext = dbContext;
-        _playBarViewModel = playBarViewModel ?? throw new ArgumentNullException(nameof(playBarViewModel));
+        _playBarVm = playBarVm ?? throw new ArgumentNullException(nameof(playBarVm));
         // Select all songs from database to initialize the song list
         var songBasics = _dbContext.SongBasic.ToList();
         SongBasic = new ObservableCollection<SongBasic>(songBasics);
@@ -44,8 +44,8 @@ public class SongListViewModel : ViewModelBase
     {
         var selectSongDetail = _dbContext.SongDetail
             .First(s => s.SongBasicId == _selectSong!.SongBasicId);
-        _playBarViewModel.LoadAndPlaySong(selectSongDetail.LocalUrl);
-        _playBarViewModel.SetHeader(_selectSong!.Title, _selectSong.Performers);
+        _playBarVm.LoadAndPlaySong(selectSongDetail.LocalUrl);
+        _playBarVm.SetHeader(_selectSong!.Title, _selectSong.Performers);
     }
 
     #endregion
