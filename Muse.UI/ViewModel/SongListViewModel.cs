@@ -30,13 +30,12 @@ public class SongListViewModel : ViewModelBase
     {
         _dbContext = dbContext;
         // Select all songs from database to initialize the songlist
-
         var songBasics =  _dbContext.SongBasic.ToList();
         SongBasic = new ObservableCollection<SongBasic>(songBasics);
-
     }
 
     #region Selct a folder and get the songs in it
+
     public RelayCommand SelectFolderCommand => new RelayCommand(execute => SelectFolder());
     private void SelectFolder()
     {
@@ -71,22 +70,38 @@ public class SongListViewModel : ViewModelBase
 
     public RelayCommand SaveSongCommand => new RelayCommand(execute => SaveSong(), canExecute => CanSave());
 
+    /// <summary>
+    /// Saving batch of the SongBasic to database
+    /// </summary>
+    /// <remarks>
+    /// Because all the new songs are dump into [ObservableCollection SongBasic] here <br/>
+    /// So directly Distinct() this one, then select the one w/o SongBasicId <br/>
+    /// So we can rule out the one which is the same with the old songs, <br/>
+    /// Then take the one which is from the database <br/>
+    /// And then save the left one to the database <br/>
+    /// But still a problem: how can we know the song Distinct() at first is from outside or from database? <br/>
+    /// If Distinct() is deleting the one from database, it will cause a repeated song save to database <br/>
+    /// </remarks>
     private void SaveSong()
     {
-        // saving the SongBasic to database
-
-        // 获取数据库中已有的歌曲
         var existingSongs =  _dbContext.SongBasic.ToList();
         var existingSongIds = new HashSet<int>(existingSongs.Select(s => s.SongBasicId));
 
-        // 过滤掉已存在的歌曲
-        var newSongs = SongBasic
+        var allSongs = SongBasic
+            .Distinct()
             .Where(song => !existingSongIds.Contains(song.SongBasicId))
             .ToList();
+        // Todo: from actual preforms seems like it can work well, but the problem state in remarks can still be happend
 
-         _dbContext.SongBasic.AddRange(newSongs);
+         _dbContext.SongBasic.AddRange(allSongs);
          _dbContext.SaveChanges();
-        // Todo: need to check the song if it exists in the database, if not, add it.
+
+         var updatedSongs = _dbContext.SongBasic.ToList();
+         SongBasic.Clear();  // Clear the collection first
+         foreach (var song in updatedSongs)
+         {
+             SongBasic.Add(song);
+         }
 
     }
 
