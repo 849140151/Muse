@@ -4,6 +4,32 @@ namespace Muse.AudioProcessor.SoundTrackOperator;
 
 public static class AudioKnife
 {
+    private static TagLib.File? _audio;
+
+    public static void Load(string songPath)
+    {
+        _audio?.Dispose();
+        try
+        {
+            _audio = TagLib.File.Create(songPath);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to process audio file: {Path.GetFileName(songPath)}");
+            Console.WriteLine($"Error message: {ex.Message}");
+        }
+    }
+
+    public static void ReadAudioPerformers()
+    {
+        var performers = _audio.Tag.Performers;
+        Console.WriteLine(performers.Count());
+        foreach (var performer in performers)
+        {
+            Console.WriteLine(performer);
+        }
+    }
+
 
     /// <summary>
     /// Read audio tags from a file
@@ -19,7 +45,7 @@ public static class AudioKnife
             SongBasic Song = new SongBasic
             {
                 Title = audio.Tag.Title,
-                Performers = audio.Tag.Performers is { Length: > 0 } ? audio.Tag.Performers[0] : "Unknown",
+                Performers = audio.Tag.Performers is { Length: > 0 } ? string.Join(", ", audio.Tag.Performers) : "Unknown",
                 Album = audio.Tag.Album,
                 Duration = audio.Properties.Duration,
                 SongDetail = new SongDetail

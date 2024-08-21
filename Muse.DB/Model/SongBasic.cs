@@ -11,7 +11,6 @@ public class SongBasic
 
     [Column(TypeName = "nvarchar(10)")]
     public string Performers { get; set; }
-    // Todo: Performers in TaglibSharp is a string[], need to find out if there is string[1] existed
 
     [Column(TypeName = "nvarchar(20)")]
     public string Title { get; set; }
