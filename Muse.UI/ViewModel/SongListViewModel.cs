@@ -15,13 +15,13 @@ public class SongListViewModel : ViewModelBase
     
     public ObservableCollection<SongBasic> SongBasic { get; set; }
 
-    public SongBasic selectSong;
+    private SongBasic _selectSong;
     public SongBasic SelectSong
     {
-        get => selectSong;
+        get => _selectSong;
         set
         {
-            selectSong = value;
+            _selectSong = value;
             OnPropertyChanged();
         }
     }
