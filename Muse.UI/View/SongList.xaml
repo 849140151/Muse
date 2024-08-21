@@ -3,29 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Muse.UI.View"
+             xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Button Content="Select Folder" Command="{Binding SelectFolderCommand}"
-                            Width="150" Height="30" Margin="5"/>
-                    <Button Content="Save Song" Command="{Binding SaveSongCommand}"
-                            Width="150" Height="30" Margin="5"/>
-                    <Button Content="Delete Song" Command="{Binding DeleteSongCommand}"
-                            Width="150" Height="30" Margin="5"/>
-                    <Button Content="Print Song" Command="{Binding PrintSongCommand}"
-                            Width="150" Height="30" Margin="5"/>
-                </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Content="Select Folder" Command="{Binding SelectFolderCommand}"
+                        Width="150" Height="30" Margin="5" />
+                <Button Content="Save Song" Command="{Binding SaveSongCommand}"
+                        Width="150" Height="30" Margin="5" />
+                <Button Content="Delete Song" Command="{Binding DeleteSongCommand}"
+                        Width="150" Height="30" Margin="5" />
+                <Button Content="Print Song" Command="{Binding PrintSongCommand}"
+                        Width="150" Height="30" Margin="5" />
+            </StackPanel>
 
             <DataGrid ItemsSource="{Binding SongBasic}" SelectedItem="{Binding SelectSong}"
                       CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <cmd:EventToCommand Command="{Binding OnSongDoubleClickCommand}"
+                                            CommandParameter="{Binding SelectSong, RelativeSource={RelativeSource Self}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="歌曲" Binding="{Binding Title}" Width="5*"/>
-                    <DataGridTextColumn Header="歌手" Binding="{Binding Performers}" Width="5*"/>
-                    <DataGridTextColumn Header="时长" Binding="{Binding FormattedDuration}" Width="5*"/>
-                    <DataGridTextColumn Header="专辑" Binding="{Binding Album}" Width="5*"/>
+                    <DataGridTextColumn Header="歌曲" Binding="{Binding Title}" Width="5*" />
+                    <DataGridTextColumn Header="歌手" Binding="{Binding Performers}" Width="5*" />
+                    <DataGridTextColumn Header="时长" Binding="{Binding FormattedDuration}" Width="5*" />
+                    <DataGridTextColumn Header="专辑" Binding="{Binding Album}" Width="5*" />
+                    <DataGridTemplateColumn Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="播放"
+                                        Command="{Binding DataContext.OnSongDoubleClickCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        CommandParameter="{Binding}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

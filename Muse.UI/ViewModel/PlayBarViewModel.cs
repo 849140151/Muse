@@ -5,8 +5,6 @@ namespace Muse.UI.ViewModel;
 public class PlayBarViewModel : ViewModelBase
 {
 
-
-
     #region Play Song
 
     public RelayCommand PlayCommand => new RelayCommand(execute => Play(), canExecute => CanUsePlayBar());
@@ -46,4 +44,9 @@ public class PlayBarViewModel : ViewModelBase
         return true;
     }
 
+    public void LoadAndPlaySong(string? songDetailLocalUrl)
+    {
+        AudioPlayer.Load(songDetailLocalUrl);
+        AudioPlayer.Play();
+    }
 }

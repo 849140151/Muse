@@ -1,22 +1,23 @@
 ﻿using System.Collections.ObjectModel;
-using System.IO;
 using System.Windows;
 using Muse.AudioProcessor.SoundTrackOperator;
 using Muse.DB.Configuration;
-using Muse.UI.MVVM;
 using Muse.DB.Model;
-using WinForms = System.Windows.Forms;
+using Muse.UI.MVVM;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Muse.UI.ViewModel;
 
 public class SongListViewModel : ViewModelBase
 {
-    private readonly MyDbContext  _dbContext;
-    
+    private readonly MyDbContext _dbContext;
+    private readonly PlayBarViewModel _playBarViewModel;
+
     public ObservableCollection<SongBasic> SongBasic { get; set; }
 
-    private SongBasic _selectSong;
-    public SongBasic SelectSong
+    private SongBasic? _selectSong;
+
+    public SongBasic? SelectSong
     {
         get => _selectSong;
         set
@@ -26,17 +27,32 @@ public class SongListViewModel : ViewModelBase
         }
     }
 
-    public SongListViewModel(MyDbContext dbContext)
+    public SongListViewModel(MyDbContext dbContext, PlayBarViewModel playBarViewModel)
     {
         _dbContext = dbContext;
-        // Select all songs from database to initialize the songlist
-        var songBasics =  _dbContext.SongBasic.ToList();
+        _playBarViewModel = playBarViewModel ?? throw new ArgumentNullException(nameof(playBarViewModel));
+        // Select all songs from database to initialize the song list
+        var songBasics = _dbContext.SongBasic.ToList();
         SongBasic = new ObservableCollection<SongBasic>(songBasics);
     }
 
-    #region Selct a folder and get the songs in it
+    #region Handle double click event
 
-    public RelayCommand SelectFolderCommand => new RelayCommand(execute => SelectFolder());
+    public RelayCommand OnSongDoubleClickCommand => new(execute => OnSongDoubleClick());
+
+    private void OnSongDoubleClick()
+    {
+        var selectSongDetail = _dbContext.SongDetail
+            .First(s => s.SongBasicId == _selectSong!.SongBasicId);
+        _playBarViewModel.LoadAndPlaySong(selectSongDetail.LocalUrl);
+    }
+
+    #endregion
+
+    #region Select a folder and get the songs in it
+
+    public RelayCommand SelectFolderCommand => new(execute => SelectFolder());
+
     private void SelectFolder()
     {
         // Get all the audio files in the selected folder
@@ -44,47 +60,43 @@ public class SongListViewModel : ViewModelBase
         {
             if (dialog.ShowDialog() != DialogResult.OK) return;
 
-            List<string> audioFiles = AudioKnife.FilterAudioFiles(dialog.SelectedPath);
+            var audioFiles = AudioKnife.FilterAudioFiles(dialog.SelectedPath);
             if (!audioFiles.Any())
             {
-                System.Windows.MessageBox.Show("No audio in this folder.", "Lack of audio", MessageBoxButton.OK);
+                MessageBox.Show("No audio in this folder.", "Lack of audio", MessageBoxButton.OK);
                 return;
             }
 
-            IEnumerable<SongBasic?> newSongs = audioFiles
+            var newSongs = audioFiles
                 .Select(x => AudioKnife.ReadAudioTags(x))
                 .Where(x => x != null)
                 .Distinct(); // Remove duplicate songs, need to rewrite the Equals and GetHashCode methods of SongBasic
 
-            foreach (SongBasic? newSong in newSongs)
-            {
-                SongBasic.Add(newSong ?? throw new InvalidOperationException());
-            }
+            foreach (var newSong in newSongs) SongBasic.Add(newSong ?? throw new InvalidOperationException());
         }
     }
-
 
     #endregion
 
     #region Save songs to database
 
-    public RelayCommand SaveSongCommand => new RelayCommand(execute => SaveSong(), canExecute => CanSave());
+    public RelayCommand SaveSongCommand => new(execute => SaveSong(), canExecute => CanSave());
 
     /// <summary>
-    /// Saving batch of the SongBasic to database
+    ///     Saving batch of the SongBasic to database
     /// </summary>
     /// <remarks>
-    /// Because all the new songs are dump into [ObservableCollection SongBasic] here <br/>
-    /// So directly Distinct() this one, then select the one w/o SongBasicId <br/>
-    /// So we can rule out the one which is the same with the old songs, <br/>
-    /// Then take the one which is from the database <br/>
-    /// And then save the left one to the database <br/>
-    /// But still a problem: how can we know the song Distinct() at first is from outside or from database? <br/>
-    /// If Distinct() is deleting the one from database, it will cause a repeated song save to database <br/>
+    ///     Because all the new songs are dump into [ObservableCollection SongBasic] here <br />
+    ///     So directly Distinct() this one, then select the one w/o SongBasicId <br />
+    ///     So we can rule out the one which is the same with the old songs, <br />
+    ///     Then take the one which is from the database <br />
+    ///     And then save the left one to the database <br />
+    ///     But still a problem: how can we know the song Distinct() at first is from outside or from database? <br />
+    ///     If Distinct() is deleting the one from database, it will cause a repeated song save to database <br />
     /// </remarks>
     private void SaveSong()
     {
-        var existingSongs =  _dbContext.SongBasic.ToList();
+        var existingSongs = _dbContext.SongBasic.ToList();
         var existingSongIds = new HashSet<int>(existingSongs.Select(s => s.SongBasicId));
 
         var allSongs = SongBasic
@@ -93,16 +105,12 @@ public class SongListViewModel : ViewModelBase
             .ToList();
         // Todo: from actual preforms seems like it can work well, but the problem state in remarks can still be happend
 
-         _dbContext.SongBasic.AddRange(allSongs);
-         _dbContext.SaveChanges();
+        _dbContext.SongBasic.AddRange(allSongs);
+        _dbContext.SaveChanges();
 
-         var updatedSongs = _dbContext.SongBasic.ToList();
-         SongBasic.Clear();  // Clear the collection first
-         foreach (var song in updatedSongs)
-         {
-             SongBasic.Add(song);
-         }
-
+        var updatedSongs = _dbContext.SongBasic.ToList();
+        SongBasic.Clear(); // Clear the collection first
+        foreach (var song in updatedSongs) SongBasic.Add(song);
     }
 
     private bool CanSave()
@@ -114,7 +122,7 @@ public class SongListViewModel : ViewModelBase
 
     #region Delete songs to database
 
-    public RelayCommand DeleteSongCommand => new RelayCommand(execute => DeleteSong(), canExecute => SelectSong != null);
+    public RelayCommand DeleteSongCommand => new(execute => DeleteSong(), canExecute => SelectSong != null);
 
     private void DeleteSong()
     {
@@ -122,28 +130,22 @@ public class SongListViewModel : ViewModelBase
 
         // SongBasic.Remove(SelectSong);
         // Find that sqlite can not delete cascade, but EF core can.
-         _dbContext.SongBasic.Remove(SelectSong);
-         _dbContext.SaveChanges();
-        SongBasic.Remove(SelectSong);
-
+        _dbContext.SongBasic.Remove(SelectSong!);
+        _dbContext.SaveChanges();
+        SongBasic.Remove(SelectSong!);
     }
 
     #endregion
-
 
     #region Demo function for using RelayCommand
 
-    public RelayCommand PrintSongCommand => new RelayCommand(execute => PrintSong(), canExecute=> SelectSong != null);
+    public RelayCommand PrintSongCommand => new(execute => PrintSong(), canExecute => SelectSong != null);
+
     private void PrintSong()
     {
-        Console.WriteLine(SelectSong.Title);
-        SongDetail detail = new SongDetail();
+        Console.WriteLine(SelectSong!.Title);
+        var detail = new SongDetail();
     }
 
     #endregion
-
-
-
-
-
 }
