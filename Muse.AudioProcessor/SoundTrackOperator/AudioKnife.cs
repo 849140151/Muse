@@ -1,4 +1,5 @@
 ﻿using Muse.DB.Model;
+using TagLib;
 
 namespace Muse.AudioProcessor.SoundTrackOperator;
 
@@ -28,6 +29,12 @@ public static class AudioKnife
         {
             Console.WriteLine(performer);
         }
+    }
+
+    public static IPicture[]? ReadAudioPic()
+    {
+        var pictures = _audio.Tag.Pictures;
+        return pictures;
     }
 
 

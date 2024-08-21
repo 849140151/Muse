@@ -5,6 +5,30 @@ namespace Muse.UI.ViewModel;
 public class PlayBarViewModel : ViewModelBase
 {
 
+    private string? _songTitle;
+
+    public string? SongTitle
+    {
+        get => _songTitle;
+        set
+        {
+            _songTitle = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string? _songPerformer;
+
+    public string? SongPerformer
+    {
+        get => _songPerformer;
+        set
+        {
+            _songPerformer = value;
+            OnPropertyChanged();
+        }
+    }
+
     #region Play Song
 
     public RelayCommand PlayCommand => new RelayCommand(execute => Play(), canExecute => CanUsePlayBar());
@@ -48,5 +72,11 @@ public class PlayBarViewModel : ViewModelBase
     {
         AudioPlayer.Load(songDetailLocalUrl);
         AudioPlayer.Play();
+    }
+
+    public void SetHeader(string songTitle, string songPerformer)
+    {
+        SongTitle = songTitle;
+        SongPerformer = songPerformer;
     }
 }

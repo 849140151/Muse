@@ -45,6 +45,7 @@ public class SongListViewModel : ViewModelBase
         var selectSongDetail = _dbContext.SongDetail
             .First(s => s.SongBasicId == _selectSong!.SongBasicId);
         _playBarViewModel.LoadAndPlaySong(selectSongDetail.LocalUrl);
+        _playBarViewModel.SetHeader(_selectSong!.Title, _selectSong.Performers);
     }
 
     #endregion

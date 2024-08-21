@@ -9,35 +9,52 @@ public class Program
 {
     static void Main()
     {
-        AudioPlayer.Load(@"D:\Project\Muse\Muse.Resources\Music\Songs\tuki. - 晩餐歌.mp3");
-
-        Console.WriteLine("Playing audio");
-        AudioPlayer.Play();
-        Thread.Sleep(5000); // 播放5秒
-
-        Console.WriteLine("lowering volume of audio");
-        AudioPlayer.SetVolume(0.5f); // 设置音量为50%
-
-        Console.WriteLine("Pausing audio");
-        AudioPlayer.Pause();
-        System.Threading.Thread.Sleep(2000); // 暂停2秒
-        //
-        Console.WriteLine("Resuming audio");
-        AudioPlayer.Play();
-        Thread.Sleep(3000); // 播放3秒
-
-        Console.WriteLine("Jumping to 10 seconds");
-        AudioPlayer.SetPosition(TimeSpan.FromSeconds(10));
-        AudioPlayer.Play();
-        System.Threading.Thread.Sleep(5000); // 播放5秒
-
-        Console.WriteLine("Stopping audio");
-        AudioPlayer.Stop();
-
-        AudioPlayer.Dispose();
+        AudioKnife.Load(@"E:\Project\Muse\Muse.Resources\Music\Songs\HoneyWorks,Hanon,Kotoha - 僕らのRTA.mp3");
+        var pic = AudioKnife.ReadAudioPic();
+        foreach (var p in pic)
+        {
+            Console.WriteLine(p.ToString());
+        }
     }
 
+    /// <summary>
+    /// Audio player test
+    /// </summary>
+    // static void Main()
+    // {
+    //     AudioPlayer.Load(@"D:\Project\Muse\Muse.Resources\Music\Songs\tuki. - 晩餐歌.mp3");
+    //
+    //     Console.WriteLine("Playing audio");
+    //     AudioPlayer.Play();
+    //     Thread.Sleep(5000); // 播放5秒
+    //
+    //     Console.WriteLine("lowering volume of audio");
+    //     AudioPlayer.SetVolume(0.5f); // 设置音量为50%
+    //
+    //     Console.WriteLine("Pausing audio");
+    //     AudioPlayer.Pause();
+    //     System.Threading.Thread.Sleep(2000); // 暂停2秒
+    //     //
+    //     Console.WriteLine("Resuming audio");
+    //     AudioPlayer.Play();
+    //     Thread.Sleep(3000); // 播放3秒
+    //
+    //     Console.WriteLine("Jumping to 10 seconds");
+    //     AudioPlayer.SetPosition(TimeSpan.FromSeconds(10));
+    //     AudioPlayer.Play();
+    //     System.Threading.Thread.Sleep(5000); // 播放5秒
+    //
+    //     Console.WriteLine("Stopping audio");
+    //     AudioPlayer.Stop();
+    //
+    //     AudioPlayer.Dispose();
+    // }
 
+
+    /// <summary>
+    /// DataBase test
+    /// </summary>
+    /// <returns></returns>
     // static void Main()
     // {
     //     IServiceProvider serviceProvider = ConfigureServices();
