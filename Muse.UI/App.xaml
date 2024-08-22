@@ -1,16 +1,18 @@
 ﻿<Application x:Class="Muse.UI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:viewModel="clr-namespace:Muse.UI.ViewModel"
-             xmlns:view="clr-namespace:Muse.UI.View"
              Startup="Application_Startup">
     <Application.Resources>
-        <DataTemplate DataType="{x:Type viewModel:SongListVM}">
-            <view:SongList />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:PlayBarVM}">
-            <view:PlayBar />
-        </DataTemplate>
+
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Utilities/DataTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+
+
     </Application.Resources>
 </Application>
 
