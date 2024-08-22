@@ -7,8 +7,13 @@
     <DataTemplate DataType="{x:Type vm:SongListVM}">
         <view:SongList />
     </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:PlayBarVM}">
         <view:PlayBar />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:HomeVM}">
+        <view:Home />
     </DataTemplate>
     
 </ResourceDictionary>

@@ -50,7 +50,15 @@
     </ItemGroup>
     
     <ItemGroup>
+      <None Remove="Assets\Images\Home.png" />
+    </ItemGroup>
+    
+    <ItemGroup>
       <Folder Include="Assets\Fonts\" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Resource Include="Assets\Images\Home.png" />
     </ItemGroup>
 
 </Project>

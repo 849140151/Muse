@@ -31,6 +31,8 @@ public partial class App : Win.Application
         string dbPath = Path.Combine(slnFolder, "Muse.DB", "Muse.sqlite");
         services.AddDbContext<MyDbContext>(options => options.UseSqlite($"Data Source={dbPath}"));
 
+        services.AddSingleton<HomeVM>();
+        services.AddSingleton<Home>();
 
         services.AddSingleton<SongListVM>();
         services.AddSingleton<SongList>();

@@ -9,24 +9,31 @@
         WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
         <!-- Window Border -->
-        <Border Background="#212529" CornerRadius="20"/>
+        <Border Background="#f7f7f3" CornerRadius="20,20,50,50" Margin="0"/>
 
         <Grid>
             <!-- Base Grid -->
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="228"/>
-                <ColumnDefinition Width="622"/>
+                <ColumnDefinition Width="622.5"/>
             </Grid.ColumnDefinitions>
 
             <!-- // Navigation Panel//  -->
             <Grid HorizontalAlignment="Left" Width="228">
-                <Border Background="#272B2F" CornerRadius="20,0,0,20"/>
+                <Border Background="#ffe560" CornerRadius="20,0,0,0"/>
                 <StackPanel Height="400" Width="228">
+                    <!-- // Home // -->
+                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding HomeCommand}">
+                        <Grid>
+                            <Image Source="/Assets/Images/shutdown_def.png" Style="{StaticResource ImageStyle}"/>
+                            <TextBlock Text="Home" Style="{StaticResource TextStyle}"/>
+                        </Grid>
+                    </Menu:Btn>
                     <!-- // Song List // -->
                     <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding SongListCommand}">
                         <Grid>
@@ -37,16 +44,15 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Column="1">
+            <Grid Grid.Row="0" Grid.Column="1" Margin="10">
                 <ContentControl x:Name="Pages" Content="{Binding CurrentView}"/>
             </Grid>
 
-            <ContentControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding PlayBarView}"  />
-
+            <ContentControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch" Content="{Binding PlayBarView}"  />
 
         </Grid>
-
-
 
 
 

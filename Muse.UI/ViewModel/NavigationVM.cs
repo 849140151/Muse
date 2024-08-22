@@ -28,17 +28,26 @@ public class NavigationVM : ViewModelBase
     }
 
     private readonly SongListVM _songListVm;
-
     public ICommand SongListCommand { get; set; }
-
     private void SongList(object obj) => CurrentView = _songListVm;
 
-    public NavigationVM(SongListVM songListVM, PlayBarVM playBarVM)
+    private readonly HomeVM _homeVm;
+    public ICommand HomeCommand { get; set; }
+    private void Home(object obj) => CurrentView = _homeVm;
+
+    public NavigationVM(
+        SongListVM songListVM, PlayBarVM playBarVM,
+        HomeVM homeVm
+        )
     {
         _songListVm = songListVM;
         SongListCommand = new RelayCommand(SongList);
 
-        CurrentView = _songListVm;
+        _homeVm = homeVm;
+        HomeCommand = new RelayCommand(Home);
+
+
+        CurrentView = _homeVm;
         PlayBarView = playBarVM;
 
     }
