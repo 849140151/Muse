@@ -3,7 +3,7 @@ using System.Windows;
 using Muse.AudioProcessor.SoundTrackOperator;
 using Muse.DB.Configuration;
 using Muse.DB.Model;
-using Muse.UI.MVVM;
+using Muse.UI.Utilities;
 using MessageBox = System.Windows.MessageBox;
 
 namespace Muse.UI.ViewModel;

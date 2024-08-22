@@ -1,4 +1,4 @@
-﻿using Muse.UI.MVVM;
+﻿using Muse.UI.Utilities;
 
 namespace Muse.UI.ViewModel;
 

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace Muse.UI.MVVM;
+namespace Muse.UI.Utilities;
 
 public class RelayCommand : ICommand
 {

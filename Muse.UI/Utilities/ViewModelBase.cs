@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Muse.UI.MVVM;
+namespace Muse.UI.Utilities;
 
 public class ViewModelBase : INotifyPropertyChanged
 {
