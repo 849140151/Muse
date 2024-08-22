@@ -48,5 +48,9 @@
     <ItemGroup>
       <EmbeddedResource Remove="Muse.ConsoleControl\**" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Assets\Fonts\" />
+    </ItemGroup>
 
 </Project>
