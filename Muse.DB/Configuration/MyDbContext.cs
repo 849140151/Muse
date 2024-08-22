@@ -9,6 +9,7 @@ public class MyDbContext : DbContext
 
     public DbSet<SongDetail> SongDetail { get; set; }
 
+    public DbSet<SongLyric> SongLyric { get; set; }
 
     // For using DI
     public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)

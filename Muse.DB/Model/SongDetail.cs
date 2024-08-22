@@ -12,7 +12,6 @@ public class SongDetail
     public SongBasic SongBasic { get; set; }
 
     // Todo: need to add a SongPicture
-    public string? Lyrics { get; set; }
 
     public string? LocalUrl { get; set; }
 

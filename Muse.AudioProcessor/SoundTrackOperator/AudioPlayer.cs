@@ -1,8 +1,9 @@
 ﻿using NAudio.Wave;
+using T = System.Timers;
 
 public static class AudioPlayer
 {
-    private static IWavePlayer waveOut;
+    public static IWavePlayer waveOut;
     private static AudioFileReader audioFile;
 
     public static void Load(string filePath)
@@ -42,6 +43,22 @@ public static class AudioPlayer
     {
         if (audioFile != null) audioFile.Volume = volume; // 0.0 to 1.0
     }
+
+    public static void ShowCurrentTime()
+    {
+        Console.WriteLine($"Current Time: {audioFile.CurrentTime}");
+
+    }
+
+    public static void StartTimer()
+    {
+        T.Timer timer = new T.Timer(1000);
+        timer.Elapsed += (sender, e) => ShowCurrentTime();
+        timer.AutoReset = true;
+        timer.Start();
+    }
+
+
 
 
     public static void Dispose()

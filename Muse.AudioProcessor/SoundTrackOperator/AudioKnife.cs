@@ -57,8 +57,7 @@ public static class AudioKnife
                 Duration = audio.Properties.Duration,
                 SongDetail = new SongDetail
                 {
-                    LocalUrl = songPath,
-                    Lyrics = audio.Tag.Lyrics
+                    LocalUrl = songPath
                 }
             };
             return Song;
