@@ -30,14 +30,14 @@
                     <!-- // Home // -->
                     <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding HomeCommand}">
                         <Grid>
-                            <Image Source="/Assets/Images/shutdown_def.png" Style="{StaticResource ImageStyle}"/>
+                            <Image Source="/Assets/Images/icon-home.png" Style="{StaticResource ImageStyle}"/>
                             <TextBlock Text="Home" Style="{StaticResource TextStyle}"/>
                         </Grid>
                     </Menu:Btn>
                     <!-- // Song List // -->
                     <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding SongListCommand}">
                         <Grid>
-                            <Image Source="/Assets/Images/shutdown_def.png" Style="{StaticResource ImageStyle}"/>
+                            <Image Source="/Assets/Images/icon-songlist.png" Style="{StaticResource ImageStyle}"/>
                             <TextBlock Text="SongList" Style="{StaticResource TextStyle}"/>
                         </Grid>
                     </Menu:Btn>
