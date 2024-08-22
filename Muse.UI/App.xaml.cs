@@ -41,13 +41,16 @@ public partial class App : Win.Application
         services.AddSingleton<MainWindowVM>();
         services.AddSingleton<MainWindow>();
 
+        services.AddSingleton<NavigationVM>();
+
         return services.BuildServiceProvider();
     }
 
     private void Application_Startup(object sender, Win.StartupEventArgs e)
     {
         var mainWindow = Services.GetService<MainWindow>();
-        mainWindow!.Show();
+        mainWindow!.DataContext = Services.GetService<NavigationVM>();
+        mainWindow.Show();
     }
 
 

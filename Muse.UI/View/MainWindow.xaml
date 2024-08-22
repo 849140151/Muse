@@ -3,16 +3,52 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Menu="clr-namespace:Muse.UI.Utilities"
         mc:Ignorable="d"
-        Title="Muse" Height="450" Width="800">
+        Title="Muse" Height="600" Width="850" AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+        <!-- Window Border -->
+        <Border Background="#212529" CornerRadius="20"/>
 
-        <ContentControl Content="{Binding SongListVm}" Grid.Row="0"/>
-        <ContentControl Content="{Binding PlayBarVm}" Grid.Row="1"/>
+        <Grid>
+            <!-- Base Grid -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="228"/>
+                <ColumnDefinition Width="622"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- // Navigation Panel//  -->
+            <Grid HorizontalAlignment="Left" Width="228">
+                <Border Background="#272B2F" CornerRadius="20,0,0,20"/>
+                <StackPanel Height="400" Width="228">
+                    <!-- // Song List // -->
+                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding SongListCommand}">
+                        <Grid>
+                            <Image Source="/Assets/Images/shutdown_def.png" Style="{StaticResource ImageStyle}"/>
+                            <TextBlock Text="SongList" Style="{StaticResource TextStyle}"/>
+                        </Grid>
+                    </Menu:Btn>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <ContentControl x:Name="Pages" Content="{Binding CurrentView}"/>
+            </Grid>
+
+            <ContentControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding PlayBarView}"  />
+
+
+        </Grid>
+
+
+
+
 
     </Grid>
 </Window>
