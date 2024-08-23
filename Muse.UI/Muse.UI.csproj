@@ -54,6 +54,8 @@
       <None Remove="Assets\Images\icon-home.png" />
       <None Remove="Assets\Images\icon-songlist.png" />
       <None Remove="Assets\Images\icon-lyrics.png" />
+      <None Remove="Assets\Images\shutdown_def.png" />
+      <None Remove="Assets\Images\shutdown_mo.png" />
     </ItemGroup>
     
     <ItemGroup>
@@ -65,6 +67,8 @@
       <Resource Include="Assets\Images\icon-home.png" />
       <Resource Include="Assets\Images\icon-songlist.png" />
       <Resource Include="Assets\Images\icon-lyrics.png" />
+      <Resource Include="Assets\Images\shutdown_def.png" />
+      <Resource Include="Assets\Images\shutdown_mo.png" />
     </ItemGroup>
 
 </Project>

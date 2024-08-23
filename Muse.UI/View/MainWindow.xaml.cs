@@ -12,4 +12,9 @@ public partial class MainWindow : Window
         DataContext = mainWindowVm;
 
     }
+
+    private void CloseAppClick(object sender, RoutedEventArgs e)
+    {
+        Close();
+    }
 }

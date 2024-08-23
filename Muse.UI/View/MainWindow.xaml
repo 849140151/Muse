@@ -19,8 +19,8 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="228"/>
-                <ColumnDefinition Width="622.5"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="700.5"/>
             </Grid.ColumnDefinitions>
 
             <!-- // Navigation Panel//  -->
@@ -38,14 +38,14 @@
                     <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding SongListCommand}">
                         <Grid>
                             <Image Source="/Assets/Images/icon-songlist.png" Style="{StaticResource ImageStyle}"/>
-                            <TextBlock Text="SongList" Style="{StaticResource TextStyle}"/>
+                            <TextBlock Text="Songs" Style="{StaticResource TextStyle}"/>
                         </Grid>
                     </Menu:Btn>
                     <!-- // Lyric // -->
                     <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding LyricCommand}">
                         <Grid>
                             <Image Source="/Assets/Images/icon-lyrics.png" Style="{StaticResource ImageStyle}"/>
-                            <TextBlock Text="Lyric" Style="{StaticResource TextStyle}"/>
+                            <TextBlock Text="Lyrics" Style="{StaticResource TextStyle}"/>
                         </Grid>
                     </Menu:Btn>
                 </StackPanel>
@@ -61,6 +61,9 @@
 
         </Grid>
 
+        <Button x:Name="CloseApp"
+                Style="{StaticResource ExitApp}"
+                Click="CloseAppClick" />
 
 
     </Grid>
