@@ -41,6 +41,13 @@
                             <TextBlock Text="SongList" Style="{StaticResource TextStyle}"/>
                         </Grid>
                     </Menu:Btn>
+                    <!-- // Lyric // -->
+                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding LyricCommand}">
+                        <Grid>
+                            <Image Source="/Assets/Images/icon-lyrics.png" Style="{StaticResource ImageStyle}"/>
+                            <TextBlock Text="Lyric" Style="{StaticResource TextStyle}"/>
+                        </Grid>
+                    </Menu:Btn>
                 </StackPanel>
             </Grid>
 

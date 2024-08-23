@@ -37,6 +37,9 @@ public partial class App : Win.Application
         services.AddSingleton<SongListVM>();
         services.AddSingleton<SongList>();
 
+        services.AddSingleton<LyricVM>();
+        services.AddSingleton<Lyric>();
+
         services.AddSingleton<PlayBarVM>();
         services.AddSingleton<PlayBar>();
 

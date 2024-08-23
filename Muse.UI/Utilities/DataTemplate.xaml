@@ -15,5 +15,9 @@
     <DataTemplate DataType="{x:Type vm:HomeVM}">
         <view:Home />
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:LyricVM}">
+        <view:Lyric />
+    </DataTemplate>
     
 </ResourceDictionary>

@@ -53,6 +53,7 @@
       <None Remove="Assets\Images\Home.png" />
       <None Remove="Assets\Images\icon-home.png" />
       <None Remove="Assets\Images\icon-songlist.png" />
+      <None Remove="Assets\Images\icon-lyrics.png" />
     </ItemGroup>
     
     <ItemGroup>
@@ -63,6 +64,7 @@
       <Resource Include="Assets\Images\Home.png" />
       <Resource Include="Assets\Images\icon-home.png" />
       <Resource Include="Assets\Images\icon-songlist.png" />
+      <Resource Include="Assets\Images\icon-lyrics.png" />
     </ItemGroup>
 
 </Project>
