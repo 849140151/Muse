@@ -9,7 +9,7 @@ public class SongDetail
 
     public int SongBasicId { get; set; }
     [ForeignKey("SongBasicId")]
-    public SongBasic SongBasic { get; set; }
+    public SongBasic? SongBasic { get; set; }
 
     // Todo: need to add a SongPicture
 

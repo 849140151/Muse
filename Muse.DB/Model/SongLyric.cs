@@ -15,10 +15,8 @@ public class SongLyric
 
     public string? Chinese { get; set; }
 
-    public string? English { get; set; }
-
     public int SongBasicId { get; set; }
     [ForeignKey("SongBasicId")]
-    public SongBasic SongBasic { get; set; }
+    public SongBasic? SongBasic { get; set; }
 
 }
