@@ -71,7 +71,7 @@ public class SongListVM : ViewModelBase
         {
             if (dialog.ShowDialog() != DialogResult.OK) return;
 
-            var audioFiles = AudioKnife.FilterAudioFiles(dialog.SelectedPath);
+            var audioFiles = CommonFunc.FilterAudioFiles(dialog.SelectedPath);
             if (!audioFiles.Any())
             {
                 MessageBox.Show("No audio in this folder.", "Lack of audio", MessageBoxButton.OK);
