@@ -12,6 +12,7 @@ public class SongListVM : ViewModelBase
 {
     private readonly MyDbContext _dbContext;
     private readonly PlayBarVM _playBarVm;
+    private readonly LyricVM _lyricVm;
 
     public ObservableCollection<SongBasic> SongBasic { get; set; }
 
@@ -27,10 +28,11 @@ public class SongListVM : ViewModelBase
         }
     }
 
-    public SongListVM(MyDbContext dbContext, PlayBarVM playBarVm)
+    public SongListVM(MyDbContext dbContext, PlayBarVM playBarVm, LyricVM lyricVm)
     {
         _dbContext = dbContext;
-        _playBarVm = playBarVm ?? throw new ArgumentNullException(nameof(playBarVm));
+        _playBarVm = playBarVm;
+        _lyricVm = lyricVm;
         // Select all songs from database to initialize the song list
         var songBasics = _dbContext.SongBasic.ToList();
         SongBasic = new ObservableCollection<SongBasic>(songBasics);
@@ -42,10 +44,18 @@ public class SongListVM : ViewModelBase
 
     private void OnSongDoubleClick()
     {
+        // Send the LocalUrl to PlayBarVm and play the song
         var selectSongDetail = _dbContext.SongDetail
             .First(s => s.SongBasicId == _selectSong!.SongBasicId);
-        _playBarVm.LoadAndPlaySong(selectSongDetail.LocalUrl);
+        string localUrl = selectSongDetail.LocalUrl!;
+        _playBarVm.LoadAndPlaySong(localUrl);
         _playBarVm.SetHeader(_selectSong!.Title, _selectSong.Performers);
+
+        // Send the Picture to LyricVM and show it
+        AudioKnife.Load(localUrl);
+        _lyricVm.SetSongCover(AudioKnife.Cover);
+
+
     }
 
     #endregion
