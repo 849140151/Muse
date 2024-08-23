@@ -13,6 +13,7 @@ public class SongListVM : ViewModelBase
     private readonly MyDbContext _dbContext;
     private readonly PlayBarVM _playBarVm;
     private readonly LyricVM _lyricVm;
+    private readonly AudioManager _audioManager;
 
     public ObservableCollection<SongBasic> SongBasic { get; set; }
 
@@ -28,11 +29,12 @@ public class SongListVM : ViewModelBase
         }
     }
 
-    public SongListVM(MyDbContext dbContext, PlayBarVM playBarVm, LyricVM lyricVm)
+    public SongListVM(MyDbContext dbContext, PlayBarVM playBarVm, LyricVM lyricVm, AudioManager audioManager)
     {
         _dbContext = dbContext;
         _playBarVm = playBarVm;
         _lyricVm = lyricVm;
+        _audioManager = audioManager;
         // Select all songs from database to initialize the song list
         var songBasics = _dbContext.SongBasic.ToList();
         SongBasic = new ObservableCollection<SongBasic>(songBasics);
@@ -52,10 +54,8 @@ public class SongListVM : ViewModelBase
         _playBarVm.SetHeader(_selectSong!.Title, _selectSong.Performers);
 
         // Send the Picture to LyricVM and show it
-        AudioKnife.Load(localUrl);
-        _lyricVm.SetSongCover(AudioKnife.Cover);
-
-
+        _audioManager.Load(localUrl);
+        if (_audioManager.Cover != null) _lyricVm.SetSongCover(_audioManager.Cover);
     }
 
     #endregion
@@ -79,7 +79,11 @@ public class SongListVM : ViewModelBase
             }
 
             var newSongs = audioFiles
-                .Select(x => AudioKnife.ReadAudioTags(x))
+                .Select(audio =>
+                {
+                    _audioManager.Load(audio);
+                    return _audioManager.SongBasic;
+                })
                 .Where(x => x != null)
                 .Distinct(); // Remove duplicate songs, need to rewrite the Equals and GetHashCode methods of SongBasic
 

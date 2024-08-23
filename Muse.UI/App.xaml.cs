@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Muse.AudioProcessor.SoundTrackOperator;
 using Muse.DB.Configuration;
 using Muse.UI.View;
 using Muse.UI.ViewModel;
@@ -30,6 +31,8 @@ public partial class App : Win.Application
         string slnFolder = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\.."));
         string dbPath = Path.Combine(slnFolder, "Muse.DB", "Muse.sqlite");
         services.AddDbContext<MyDbContext>(options => options.UseSqlite($"Data Source={dbPath}"));
+
+        services.AddSingleton<AudioManager>();
 
         services.AddSingleton<HomeVM>();
         services.AddSingleton<Home>();
