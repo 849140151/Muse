@@ -105,6 +105,7 @@ public class PlayBarVM : ViewModelBase
     {
         AudioPlayer.Load(songDetailLocalUrl ?? throw new ArgumentNullException(nameof(songDetailLocalUrl)));
         SongBasicDuration = songBasicDuration;
+        IsChecked = false; // Reset the state, otherwise user have to double-click a song and hit the button to play the song
         PlayOrPause();
     }
 
