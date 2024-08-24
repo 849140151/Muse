@@ -7,30 +7,7 @@ public class PlayBarVM : ViewModelBase
 {
     #region Fields and Properties -------------------------------------------------------------------
 
-    private string? _songTitle;
-
-    public string? SongTitle
-    {
-        get => _songTitle;
-        set
-        {
-            _songTitle = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string? _songPerformer;
-
-    public string? SongPerformer
-    {
-        get => _songPerformer;
-        set
-        {
-            _songPerformer = value;
-            OnPropertyChanged();
-        }
-    }
-
+    private bool _isUserDragging = false;
 
     private TimeSpan _currentTimeStamp;
 
@@ -39,21 +16,26 @@ public class PlayBarVM : ViewModelBase
         get => _currentTimeStamp;
         set
         {
-            _currentTimeStamp = value;
-            OnPropertyChanged();
+            if (_currentTimeStamp != value)
+            {
+                _currentTimeStamp = value;
+                OnPropertyChanged();
+                // Make sure the change of CurrentTimeStamp can notify the slider bar
+                OnPropertyChanged(nameof(CurrentTimeSeconds));
+            }
         }
     }
 
-
-    private TimeSpan _songBasicDuration;
-
-    public TimeSpan SongBasicDuration
+    public double CurrentTimeSeconds
     {
-        get => _songBasicDuration;
+        get => _currentTimeStamp.TotalSeconds;
         set
         {
-            _songBasicDuration = value;
-            OnPropertyChanged();
+            CurrentTimeStamp = TimeSpan.FromSeconds(value);
+            if (_isUserDragging)
+            {
+                AudioPlayer.SetPosition(CurrentTimeStamp);
+            }
         }
     }
 
@@ -69,7 +51,10 @@ public class PlayBarVM : ViewModelBase
     private void OnCurrentTimeUpdated(TimeSpan currentTime)
     {
         // Update CurrentTimeStamp with the received value
-        CurrentTimeStamp = currentTime;
+        if (!_isUserDragging)
+        {
+            CurrentTimeStamp = currentTime;
+        }
     }
 
 
@@ -100,6 +85,18 @@ public class PlayBarVM : ViewModelBase
 
     #region Load a new song from outside, Update the header -------------------------------------------------------------------
 
+    private TimeSpan _songBasicDuration;
+
+    public TimeSpan SongBasicDuration
+    {
+        get => _songBasicDuration;
+        set
+        {
+            _songBasicDuration = value;
+            OnPropertyChanged();
+        }
+    }
+
     public void LoadAndPlaySong(string? songDetailLocalUrl, TimeSpan songBasicDuration)
     {
         AudioPlayer.Load(songDetailLocalUrl ?? throw new ArgumentNullException(nameof(songDetailLocalUrl)));
@@ -107,6 +104,29 @@ public class PlayBarVM : ViewModelBase
         Play();
     }
 
+    private string? _songTitle;
+
+    public string? SongTitle
+    {
+        get => _songTitle;
+        set
+        {
+            _songTitle = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string? _songPerformer;
+
+    public string? SongPerformer
+    {
+        get => _songPerformer;
+        set
+        {
+            _songPerformer = value;
+            OnPropertyChanged();
+        }
+    }
     public void SetHeader(string songTitle, string songPerformer)
     {
         SongTitle = songTitle;
@@ -114,4 +134,30 @@ public class PlayBarVM : ViewModelBase
     }
 
     #endregion -------------------------------------------------------------------
+
+
+    #region DragCommand for position slider bar -------------------------------------------------------------------
+
+
+    // Control stream   xaml -> xaml.cs -> VM
+
+    public RelayCommand DragStartedCommand => new(execute => OnDragStarted(), canExecute => CanUsePlayBar());
+
+    private void OnDragStarted()
+    {
+        _isUserDragging = true;
+    }
+
+    public RelayCommand DragCompletedCommand => new(execute => OnDragCompleted(CurrentTimeSeconds), canExecute => CanUsePlayBar());
+
+    private void OnDragCompleted(double newValue)
+    {
+        if (_isUserDragging)
+        {
+            AudioPlayer.SetPosition(TimeSpan.FromSeconds(newValue));
+            _isUserDragging = false;
+        }
+    }
+
+    #endregion
 }

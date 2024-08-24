@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="250" d:DesignWidth="500"
+             d:DesignHeight="250" d:DesignWidth="850"
              Background="Transparent">
     <Grid>
         <Border Background="#46a9e5" CornerRadius="0,0,20,20" Margin="0"
@@ -12,7 +12,6 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel>
-
                 <TextBox Text="{Binding SongTitle}" Margin="2" Width="100" Height="20" FontSize="15"/>
                 <TextBox Text="{Binding SongPerformer}" Margin="2" Width="150" Height="20" FontSize="15"/>
             </StackPanel>
@@ -22,6 +21,25 @@
                     Width="150" Height="30" Margin="5"/>
             <Button Content="Pause" Command="{Binding PauseCommand}"
                     Width="150" Height="30" Margin="5"/>
+
+            <Slider
+                x:Name="PositionSlider"
+                Minimum="0"
+                Maximum="{Binding SongBasicDuration.TotalSeconds}"
+                Value="{Binding CurrentTimeSeconds, Mode=TwoWay}"
+                TickFrequency="1"
+                IsSnapToTickEnabled="True"
+                Height="20"
+                Width="150"
+                AutoToolTipPlacement="None">
+                <!-- // finding a way to link the slider bar and the song // -->
+                <Slider.Resources>
+                    <Style TargetType="Thumb">
+                        <EventSetter Event="DragStarted" Handler="Thumb_DragStarted"/>
+                        <EventSetter Event="DragCompleted" Handler="Thumb_DragCompleted"/>
+                    </Style>
+                </Slider.Resources>
+            </Slider>
 
         </StackPanel>
     </Grid>
