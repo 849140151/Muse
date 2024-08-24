@@ -10,6 +10,15 @@ public partial class PlayBar : UserControl
     public PlayBar()
     {
         InitializeComponent();
+        // Subscribe for VolumeButton
+        VolumeButton.MouseEnter += (s, e) => VolumePopup.IsOpen = true;
+
+        VolumeButton.MouseLeave += (s, e) =>
+        {
+            if (!VolumePopup.IsMouseOver) VolumePopup.IsOpen = false;
+        };
+
+        VolumePopup.MouseLeave += (s, e) => VolumePopup.IsOpen = false;
     }
 
     public PlayBar(PlayBarVM playBarVm)

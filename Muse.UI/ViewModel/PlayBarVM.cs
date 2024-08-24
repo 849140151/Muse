@@ -106,6 +106,7 @@ public class PlayBarVM : ViewModelBase
         AudioPlayer.Load(songDetailLocalUrl ?? throw new ArgumentNullException(nameof(songDetailLocalUrl)));
         SongBasicDuration = songBasicDuration;
         IsChecked = false; // Reset the state, otherwise user have to double-click a song and hit the button to play the song
+        AudioPlayer.SetVolume(_volume/100); // Reset the volume from the UI, divided by 100 is because the UI is from 0 to 100
         PlayOrPause();
     }
 
@@ -165,4 +166,37 @@ public class PlayBarVM : ViewModelBase
     }
 
     #endregion
+
+    #region Volumn Slider -------------------------------------------------------------------
+
+    private float _volume = 20; // Initialize the volume
+    public float Volume
+    {
+        get => _volume;
+        set
+        {
+            _volume = value;
+            AudioPlayer.SetVolume(value/100); // Divided by 100 is because the UI is from 0 to 100
+            OnPropertyChanged();
+        }
+    }
+
+    public RelayCommand MutingCommand => new(execute => Muting(), canExecute => CanUsePlayBar());
+
+    private void Muting()
+    {
+        if (Volume != 0)
+        {
+            AudioPlayer.SetVolume(0f);
+        }
+        else
+        {
+            AudioPlayer.SetVolume(_volume/100);
+        }
+    }
+
+    #endregion
+
+
+
 }
