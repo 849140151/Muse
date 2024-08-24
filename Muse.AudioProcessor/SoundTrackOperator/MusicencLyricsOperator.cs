@@ -22,6 +22,11 @@ public class MusicencLyricsOperator
 
     public void SaveSongLyrics()
     {
+        if (LyricLines == null)
+        {
+            Console.WriteLine("Error in SaveSongLyrics(), the LyricLines is null");
+            return;
+        }
         foreach (string lyric in LyricLines)
         {
             MatchCollection allMatches = Regex.Matches(lyric, @"(?<timestamp>\[\d{2}:\d{2}\])(?<lyric>.*)");
@@ -42,7 +47,6 @@ public class MusicencLyricsOperator
                     };
                     _dbContext.SongLyric.Add(newLyric);
                     _dbContext.SaveChanges();
-
                 }
                 else
                 {
