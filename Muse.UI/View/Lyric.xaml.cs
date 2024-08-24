@@ -10,10 +10,4 @@ public partial class Lyric : UserControl
         InitializeComponent();
     }
 
-    public Lyric(LyricVM lyricVm)
-    {
-        InitializeComponent();
-        DataContext = lyricVm;
-    }
-
 }

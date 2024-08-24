@@ -9,10 +9,4 @@ public partial class Home : UserControl
     {
         InitializeComponent();
     }
-
-    public Home(HomeVM homeVm)
-    {
-        InitializeComponent();
-        DataContext = homeVm;
-    }
 }

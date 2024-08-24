@@ -21,12 +21,6 @@ public partial class PlayBar : UserControl
         VolumePopup.MouseLeave += (s, e) => VolumePopup.IsOpen = false;
     }
 
-    public PlayBar(PlayBarVM playBarVm)
-    {
-        InitializeComponent();
-        DataContext = playBarVm;
-    }
-
     private void Thumb_DragStarted(object sender, DragStartedEventArgs e)
     {
         if (AudioPlayer.AudioFile is null) return;

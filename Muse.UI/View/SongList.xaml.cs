@@ -10,9 +10,4 @@ public partial class SongList : UserControl
         InitializeComponent();
     }
 
-    public SongList(SongListVM songListVm)
-    {
-        InitializeComponent();
-        DataContext = songListVm;
-    }
 }

@@ -6,11 +6,9 @@ namespace Muse.UI;
 
 public partial class MainWindow : Window
 {
-    public MainWindow(MainWindowVM mainWindowVm)
+    public MainWindow()
     {
         InitializeComponent();
-        DataContext = mainWindowVm;
-
     }
 
     private void CloseAppClick(object sender, RoutedEventArgs e)

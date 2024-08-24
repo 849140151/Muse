@@ -57,7 +57,7 @@ public partial class App : Win.Application
     private void Application_Startup(object sender, Win.StartupEventArgs e)
     {
         var mainWindow = Services.GetService<MainWindow>();
-        mainWindow!.DataContext = Services.GetService<NavigationVM>();
+        mainWindow!.DataContext = Services.GetService<NavigationVM>(); // Giving the dataContext for all
         mainWindow.Show();
     }
 
