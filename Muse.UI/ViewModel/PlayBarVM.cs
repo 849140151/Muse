@@ -31,14 +31,28 @@ public class PlayBarVM : ViewModelBase
         }
     }
 
-    private TimeSpan? _currentTimeStamp;
 
-    public TimeSpan? CurrentTimeStamp
+    private TimeSpan _currentTimeStamp;
+
+    public TimeSpan CurrentTimeStamp
     {
         get => _currentTimeStamp;
         set
         {
             _currentTimeStamp = value;
+            OnPropertyChanged();
+        }
+    }
+
+
+    private TimeSpan _songBasicDuration;
+
+    public TimeSpan SongBasicDuration
+    {
+        get => _songBasicDuration;
+        set
+        {
+            _songBasicDuration = value;
             OnPropertyChanged();
         }
     }
@@ -86,9 +100,10 @@ public class PlayBarVM : ViewModelBase
 
     #region Load a new song from outside, Update the header -------------------------------------------------------------------
 
-    public void LoadAndPlaySong(string? songDetailLocalUrl)
+    public void LoadAndPlaySong(string? songDetailLocalUrl, TimeSpan songBasicDuration)
     {
         AudioPlayer.Load(songDetailLocalUrl ?? throw new ArgumentNullException(nameof(songDetailLocalUrl)));
+        SongBasicDuration = songBasicDuration;
         Play();
     }
 

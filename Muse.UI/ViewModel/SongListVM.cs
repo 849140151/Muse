@@ -50,7 +50,7 @@ public class SongListVM : ViewModelBase
         var selectSongDetail = _dbContext.SongDetail
             .First(s => s.SongBasicId == _selectSong!.SongBasicId);
         string localUrl = selectSongDetail.LocalUrl!;
-        _playBarVm.LoadAndPlaySong(localUrl);
+        _playBarVm.LoadAndPlaySong(localUrl, _selectSong!.Duration);
         _playBarVm.SetHeader(_selectSong!.Title, _selectSong.Performers);
 
         // Send the Picture to LyricVM and show it

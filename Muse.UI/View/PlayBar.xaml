@@ -12,10 +12,12 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel>
-                <TextBlock Text="{Binding CurrentTimeStamp}" Margin="2" Width="100" Height="20" FontSize="15"/>
+
                 <TextBox Text="{Binding SongTitle}" Margin="2" Width="100" Height="20" FontSize="15"/>
                 <TextBox Text="{Binding SongPerformer}" Margin="2" Width="150" Height="20" FontSize="15"/>
             </StackPanel>
+            <TextBlock Text="{Binding CurrentTimeStamp, StringFormat={}{0:mm\\:ss}}" Margin="2" Width="100" Height="20" FontSize="15"/>
+            <TextBlock Text="{Binding SongBasicDuration, StringFormat={}{0:mm\\:ss}}" Margin="2" Width="100" Height="20" FontSize="15"/>
             <Button Content="Play" Command="{Binding PlayCommand}"
                     Width="150" Height="30" Margin="5"/>
             <Button Content="Pause" Command="{Binding PauseCommand}"
