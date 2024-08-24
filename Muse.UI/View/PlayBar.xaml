@@ -6,6 +6,9 @@
              mc:Ignorable="d"
              d:DesignHeight="250" d:DesignWidth="850"
              Background="Transparent">
+    <UserControl.Resources>
+        <FontFamily x:Key="FF">../Assets/Fonts/#iconfont</FontFamily>
+    </UserControl.Resources>
     <Grid>
         <Border Background="#46a9e5" CornerRadius="0,0,20,20" Margin="0"
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
@@ -15,31 +18,59 @@
                 <TextBox Text="{Binding SongTitle}" Margin="2" Width="100" Height="20" FontSize="15"/>
                 <TextBox Text="{Binding SongPerformer}" Margin="2" Width="150" Height="20" FontSize="15"/>
             </StackPanel>
-            <TextBlock Text="{Binding CurrentTimeStamp, StringFormat={}{0:mm\\:ss}}" Margin="2" Width="100" Height="20" FontSize="15"/>
-            <TextBlock Text="{Binding SongBasicDuration, StringFormat={}{0:mm\\:ss}}" Margin="2" Width="100" Height="20" FontSize="15"/>
-            <Button Content="Play" Command="{Binding PlayCommand}"
-                    Width="150" Height="30" Margin="5"/>
-            <Button Content="Pause" Command="{Binding PauseCommand}"
-                    Width="150" Height="30" Margin="5"/>
 
-            <Slider
-                x:Name="PositionSlider"
-                Minimum="0"
-                Maximum="{Binding SongBasicDuration.TotalSeconds}"
-                Value="{Binding CurrentTimeSeconds, Mode=TwoWay}"
-                TickFrequency="1"
-                IsSnapToTickEnabled="True"
-                Height="20"
-                Width="150"
-                AutoToolTipPlacement="None">
-                <!-- // finding a way to link the slider bar and the song // -->
-                <Slider.Resources>
-                    <Style TargetType="Thumb">
-                        <EventSetter Event="DragStarted" Handler="Thumb_DragStarted"/>
-                        <EventSetter Event="DragCompleted" Handler="Thumb_DragCompleted"/>
+
+            <ToggleButton Width="150" Height="30" Margin="5"
+                          IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                          Command="{Binding PlayOrPauseCommand}">
+                <ToggleButton.Style>
+                    <Style TargetType="ToggleButton">
+                        <Setter Property="Content">
+                            <Setter.Value>
+                                <TextBlock Text="&#xe630;" FontFamily="{StaticResource FF}"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <TextBlock Text="&#xe676;" FontFamily="{StaticResource FF}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
                     </Style>
-                </Slider.Resources>
-            </Slider>
+                </ToggleButton.Style>
+
+            </ToggleButton>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                <TextBlock Text="{Binding CurrentTimeStamp, StringFormat={}{0:mm\\:ss}}" Margin="2" Width="100" Height="20" FontSize="15"/>
+
+                <Slider
+                    x:Name="PositionSlider"
+                    Minimum="0"
+                    Maximum="{Binding SongBasicDuration.TotalSeconds}"
+                    Value="{Binding CurrentTimeSeconds, Mode=TwoWay}"
+                    TickFrequency="1"
+                    IsSnapToTickEnabled="True"
+                    Height="20"
+                    Width="150"
+                    AutoToolTipPlacement="None">
+                    <!-- // finding a way to link the slider bar and the song // -->
+                    <Slider.Resources>
+                        <Style TargetType="Thumb">
+                            <EventSetter Event="DragStarted" Handler="Thumb_DragStarted"/>
+                            <EventSetter Event="DragCompleted" Handler="Thumb_DragCompleted"/>
+                        </Style>
+                    </Slider.Resources>
+                </Slider>
+
+                <TextBlock Text="{Binding SongBasicDuration, StringFormat={}{0:mm\\:ss}}" Margin="2" Width="100" Height="20" FontSize="15"/>
+
+            </StackPanel>
+
 
         </StackPanel>
     </Grid>

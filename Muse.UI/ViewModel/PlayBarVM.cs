@@ -60,19 +60,23 @@ public class PlayBarVM : ViewModelBase
 
     #region Basic Function: Play, Pause, CanUsePlayBar -------------------------------------------------------------------
 
-    public RelayCommand PlayCommand => new(execute => Play(), canExecute => CanUsePlayBar());
-
-    private void Play()
+    private bool _isChecked;
+    public bool IsChecked
     {
-        AudioPlayer.Play();
+        get => _isChecked;
+        set
+        {
+            if (_isChecked == value) return;
+            _isChecked = value;
+            OnPropertyChanged();
+        }
     }
+    public RelayCommand PlayOrPauseCommand => new(execute => PlayOrPause(), canExecute => CanUsePlayBar());
 
-
-    public RelayCommand PauseCommand => new(execute => Pause(), canExecute => CanUsePlayBar());
-
-    private void Pause()
+    private void PlayOrPause()
     {
-        AudioPlayer.Pause();
+        if (IsChecked) AudioPlayer.Pause();
+        else AudioPlayer.Play();
     }
 
     private static bool CanUsePlayBar()
@@ -101,7 +105,7 @@ public class PlayBarVM : ViewModelBase
     {
         AudioPlayer.Load(songDetailLocalUrl ?? throw new ArgumentNullException(nameof(songDetailLocalUrl)));
         SongBasicDuration = songBasicDuration;
-        Play();
+        PlayOrPause();
     }
 
     private string? _songTitle;
