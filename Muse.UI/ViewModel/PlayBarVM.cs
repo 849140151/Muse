@@ -1,9 +1,11 @@
-﻿using Muse.UI.Utilities;
+﻿using Muse.AudioProcessor.SoundTrackOperator;
+using Muse.UI.Utilities;
 
 namespace Muse.UI.ViewModel;
 
 public class PlayBarVM : ViewModelBase
 {
+    #region Fields and Properties -------------------------------------------------------------------
 
     private string? _songTitle;
 
@@ -29,49 +31,65 @@ public class PlayBarVM : ViewModelBase
         }
     }
 
-    #region Play Song
+    private TimeSpan? _currentTimeStamp;
 
-    public RelayCommand PlayCommand => new RelayCommand(execute => Play(), canExecute => CanUsePlayBar());
+    public TimeSpan? CurrentTimeStamp
+    {
+        get => _currentTimeStamp;
+        set
+        {
+            _currentTimeStamp = value;
+            OnPropertyChanged();
+        }
+    }
+
+    #endregion of Fields and Properties -------------------------------------------------------------------
+
+    public PlayBarVM()
+    {
+        // Subscribe to the CurrentTimeUpdated event, get the TimeSpan and raise the Event Handler
+        AudioPlayer.CurrentTimeUpdated += OnCurrentTimeUpdated;
+    }
+
+
+    private void OnCurrentTimeUpdated(TimeSpan currentTime)
+    {
+        // Update CurrentTimeStamp with the received value
+        CurrentTimeStamp = currentTime;
+    }
+
+
+    #region Basic Function: Play, Pause, CanUsePlayBar -------------------------------------------------------------------
+
+    public RelayCommand PlayCommand => new(execute => Play(), canExecute => CanUsePlayBar());
 
     private void Play()
     {
         AudioPlayer.Play();
     }
 
-    #endregion
 
-    #region Pause Song
-
-    public RelayCommand PauseCommand => new RelayCommand(execute => Pause(), canExecute => CanUsePlayBar());
+    public RelayCommand PauseCommand => new(execute => Pause(), canExecute => CanUsePlayBar());
 
     private void Pause()
     {
         AudioPlayer.Pause();
     }
 
-    #endregion
-
-    #region Stop Song
-
-    public RelayCommand StopCommand => new RelayCommand(execute => Stop(), canExecute => CanUsePlayBar());
-
-    private void Stop()
+    private static bool CanUsePlayBar()
     {
-        AudioPlayer.Stop();
+        return AudioPlayer.AudioFile != null;
     }
 
-    #endregion
+    #endregion of basic function  -------------------------------------------------------------------
 
 
-    private bool CanUsePlayBar()
-    {
-        return true;
-    }
+    #region Load a new song from outside, Update the header -------------------------------------------------------------------
 
     public void LoadAndPlaySong(string? songDetailLocalUrl)
     {
-        AudioPlayer.Load(songDetailLocalUrl);
-        AudioPlayer.Play();
+        AudioPlayer.Load(songDetailLocalUrl ?? throw new ArgumentNullException(nameof(songDetailLocalUrl)));
+        Play();
     }
 
     public void SetHeader(string songTitle, string songPerformer)
@@ -79,4 +97,6 @@ public class PlayBarVM : ViewModelBase
         SongTitle = songTitle;
         SongPerformer = songPerformer;
     }
+
+    #endregion -------------------------------------------------------------------
 }
