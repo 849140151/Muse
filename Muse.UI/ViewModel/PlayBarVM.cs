@@ -202,4 +202,14 @@ public class PlayBarVM : ViewModelBase
 
     #endregion
 
+
+    #region Handle select lyric from LyricVM
+
+    public void JumpToLyricTimeStamp(TimeSpan songLyricTimeStamp)
+    {
+        AudioPlayer.SetPosition(songLyricTimeStamp);
+    }
+
+    #endregion
+    
 }

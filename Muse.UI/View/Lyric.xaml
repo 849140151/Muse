@@ -9,6 +9,24 @@
              Style="{StaticResource PageStyle}">
     <Grid>
         <Image Source="{Binding SongCover}"></Image>
+        <ListBox Name="LyricsListBox"
+                 ItemsSource="{Binding SongLyrics}"
+                 ScrollViewer.VerticalScrollBarVisibility="Visible"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 SelectionMode="Single"
+                 SelectedItem="{Binding SelectSongLyric, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Japanese}" FontSize="16" Padding="5">
+                        <!-- <TextBlock.InputBindings> -->
+                        <!--     <MouseBinding Command="{Binding DataContext.OnSongLyricClickCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" -->
+                        <!--                   CommandParameter="{Binding}" -->
+                        <!--                   MouseAction="LeftClick"/> -->
+                        <!-- </TextBlock.InputBindings> -->
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
     </Grid>
 </UserControl>

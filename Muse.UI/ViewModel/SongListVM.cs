@@ -56,6 +56,9 @@ public class SongListVM : ViewModelBase
         // Send the Picture to LyricVM and show it
         _audioManager.Load(localUrl);
         if (_audioManager.Cover != null) _lyricVm.SetSongCover(_audioManager.Cover);
+
+        // Get the lyrics for the song
+        _lyricVm.GetLyrics(_selectSong.SongBasicId);
     }
 
     #endregion
