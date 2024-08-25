@@ -103,7 +103,8 @@ public class MusicencLyricsOperator
 
     public TimeSpan StringToTimeSpan(string timeStamp)
     {
-        string trimmedTimeStamp = timeStamp.Trim('[', ']');
+        // TimeStamp from musicenc is mm:ss, but the Parse method needs to be hh:mm:ss
+        string trimmedTimeStamp = "00:" + timeStamp.Trim('[', ']');
         TimeSpan timeSpan = TimeSpan.Parse(trimmedTimeStamp);
         return timeSpan;
     }
