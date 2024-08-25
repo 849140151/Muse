@@ -22,34 +22,30 @@
 
             <!-- // Play and Pause ToggleButton// -->
             <ToggleButton Width="50" Height="30" Margin="5"
-                          IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                          IsChecked="{Binding IsCheckedPlayBtn, Mode=TwoWay}"
                           Command="{Binding PlayOrPauseCommand}">
                 <ToggleButton.Style>
                     <Style TargetType="ToggleButton">
-                        <Setter Property="Content" Value="▶">
-                            <!-- <Setter.Value> -->
-                            <!--     <TextBlock Text="&#xe630;" FontFamily="{StaticResource FF}"/> -->
-                            <!-- </Setter.Value> -->
-                        </Setter>
+                        <Setter Property="Content" Value="▶"/>
                         <Style.Triggers>
                             <Trigger Property="IsChecked" Value="False">
-                                <Setter Property="Content" Value="⏸">
-                                    <!-- <Setter.Value> -->
-                                    <!--     <TextBlock Text="&#xe676;" FontFamily="{StaticResource FF}"/> -->
-                                    <!-- </Setter.Value> -->
-                                </Setter>
+                                <Setter Property="Content" Value="⏸"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
                 </ToggleButton.Style>
-
             </ToggleButton>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
 
+                <!-- 写一个右端对齐的TextBlock -->
+
+
+
+
                 <TextBlock Text="{Binding CurrentTimeStamp, StringFormat={}{0:mm\\:ss}}"
                            Margin="2" Width="80" Height="20" FontSize="15"
-                           HorizontalAlignment="Right"/>
+                           TextAlignment="Right"/>
 
                 <!-- // Audio Position Slider // -->
                 <Slider
@@ -60,7 +56,7 @@
                     TickFrequency="1"
                     IsSnapToTickEnabled="True"
                     Height="20"
-                    Width="150"
+                    Width="200"
                     AutoToolTipPlacement="None">
                     <!-- // finding a way to link the slider bar and the song // -->
                     <Slider.Resources>
@@ -76,10 +72,24 @@
 
             </StackPanel>
 
+
             <!-- // Volume Button // -->
-            <Button x:Name="VolumeButton" Content="🔊" Width="50" Height="50"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Command="{Binding MutingCommand}"/>
+            <ToggleButton x:Name="VolumeButton" Width="50" Height="50"
+                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                          IsChecked="{Binding IsCheckedVolumeBtn, Mode=TwoWay}"
+                          Command="{Binding MutingCommand}">
+                <ToggleButton.Style>
+                    <Style TargetType="ToggleButton">
+                        <Setter Property="Content" Value="🔊">
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Content" Value="🔇"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+            </ToggleButton>
 
             <!-- Volume Popup -->
             <Popup x:Name="VolumePopup" Placement="Top" PlacementTarget="{Binding ElementName=VolumeButton}"

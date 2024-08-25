@@ -60,14 +60,14 @@ public class PlayBarVM : ViewModelBase
 
     #region Basic Function: Play, Pause, CanUsePlayBar -------------------------------------------------------------------
 
-    private bool _isChecked;
-    public bool IsChecked
+    private bool _isCheckedPlayBtn;
+    public bool IsCheckedPlayBtn
     {
-        get => _isChecked;
+        get => _isCheckedPlayBtn;
         set
         {
-            if (_isChecked == value) return;
-            _isChecked = value;
+            if (_isCheckedPlayBtn == value) return;
+            _isCheckedPlayBtn = value;
             OnPropertyChanged();
         }
     }
@@ -75,7 +75,7 @@ public class PlayBarVM : ViewModelBase
 
     private void PlayOrPause()
     {
-        if (IsChecked) AudioPlayer.Pause();
+        if (IsCheckedPlayBtn) AudioPlayer.Pause();
         else AudioPlayer.Play();
     }
 
@@ -105,7 +105,7 @@ public class PlayBarVM : ViewModelBase
     {
         AudioPlayer.Load(songDetailLocalUrl ?? throw new ArgumentNullException(nameof(songDetailLocalUrl)));
         SongBasicDuration = songBasicDuration;
-        IsChecked = false; // Reset the state, otherwise user have to double-click a song and hit the button to play the song
+        IsCheckedPlayBtn = false; // Reset the state, otherwise user have to double-click a song and hit the button to play the song
         AudioPlayer.SetVolume(_volume/100); // Reset the volume from the UI, divided by 100 is because the UI is from 0 to 100
         PlayOrPause();
     }
@@ -167,7 +167,7 @@ public class PlayBarVM : ViewModelBase
 
     #endregion
 
-    #region Volumn Slider -------------------------------------------------------------------
+    #region Volume Relative: MuttingCommand and Volume Slider -------------------------------------------------------------------
 
     private float _volume = 20; // Initialize the volume
     public float Volume
@@ -181,22 +181,25 @@ public class PlayBarVM : ViewModelBase
         }
     }
 
+    private bool _isCheckedVolumeBtn = false;
+    public bool IsCheckedVolumeBtn
+    {
+        get => _isCheckedVolumeBtn;
+        set
+        {
+            _isCheckedVolumeBtn = value;
+            OnPropertyChanged();
+        }
+    }
+
     public RelayCommand MutingCommand => new(execute => Muting(), canExecute => CanUsePlayBar());
 
     private void Muting()
     {
-        if (Volume != 0)
-        {
-            AudioPlayer.SetVolume(0f);
-        }
-        else
-        {
-            AudioPlayer.SetVolume(_volume/100);
-        }
+        if (IsCheckedVolumeBtn) AudioPlayer.SetVolume(0f);
+        else AudioPlayer.SetVolume(_volume/100);
     }
 
     #endregion
-
-
 
 }
