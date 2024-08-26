@@ -19,5 +19,9 @@
     <DataTemplate DataType="{x:Type vm:LyricVM}">
         <view:Lyric />
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:LyricManagerVM}">
+        <view:LyricManager />
+    </DataTemplate>
     
 </ResourceDictionary>

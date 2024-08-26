@@ -39,12 +39,18 @@ public class NavigationVM : ViewModelBase
     public ICommand LyricCommand { get; set; }
     private void Lyric(object obj) => CurrentView = _lyricVm;
 
+
+    private readonly LyricManagerVM _lyricManagerVm;
+    public ICommand LyricManagerCommand { get; set; }
+    private void LyricManager(object obj) => CurrentView = _lyricManagerVm;
+
     /// <summary>
     ///     All the DataContext VM all inject here, and then pass to the MainWindow from App.xaml
     /// </summary>
     public NavigationVM(
         HomeVM homeVm, LyricVM lyricVm,
-        PlayBarVM playBarVm, SongListVM songListVm
+        PlayBarVM playBarVm, SongListVM songListVm,
+        LyricManagerVM lyricManagerVm
         )
     {
         _songListVm = songListVm;
@@ -53,9 +59,11 @@ public class NavigationVM : ViewModelBase
         _homeVm = homeVm;
         HomeCommand = new RelayCommand(Home);
 
-        _lyricVm = lyricVm;
+        _lyricManagerVm = lyricManagerVm;
         LyricCommand = new RelayCommand(Lyric);
 
+        _lyricVm = lyricVm;
+        LyricManagerCommand = new RelayCommand(LyricManager);
 
 
         CurrentView = _homeVm;

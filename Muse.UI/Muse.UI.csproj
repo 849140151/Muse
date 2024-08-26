@@ -57,6 +57,8 @@
       <None Remove="Assets\Images\shutdown_def.png" />
       <None Remove="Assets\Images\shutdown_mo.png" />
       <None Remove="Assets\Fonts\iconfont.ttf" />
+      <None Remove="Assets\Images\icon-lyricManager.png" />
+
     </ItemGroup>
     
     <ItemGroup>
@@ -71,6 +73,7 @@
       <Resource Include="Assets\Images\shutdown_def.png" />
       <Resource Include="Assets\Images\shutdown_mo.png" />
       <Resource Include="Assets\Fonts\iconfont.ttf" />
+      <Resource Include="Assets\Images\icon-lyricManager.png" />
     </ItemGroup>
 
 </Project>
