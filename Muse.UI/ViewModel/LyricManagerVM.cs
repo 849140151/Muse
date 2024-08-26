@@ -40,23 +40,34 @@ public class LyricManagerVM : ViewModelBase
 
     #region Search song
 
-    private string? _searchInput;
-    public string? SearchInput
+    private string? _titleInput;
+    public string? TitleInput
     {
-        get => _searchInput;
+        get => _titleInput;
         set
         {
-            _searchInput = value;
+            _titleInput = value;
             OnPropertyChanged();
         }
     }
 
-    public RelayCommand SearchSongCommand => new(execute => SearchSong(SearchInput));
+    private string? _performerInput;
+    public string? PerformerInput
+    {
+        get => _performerInput;
+        set
+        {
+            _performerInput = value;
+            OnPropertyChanged();
+        }
+    }
 
-    private void SearchSong(string? songBasicTitle)
+    public RelayCommand SearchSongCommand => new(execute => SearchSong(TitleInput, PerformerInput));
+
+    private void SearchSong(string? songBasicTitle, string? songBasicPerformer)
     {
         var songs = _dbContext.SongBasic
-            .Where(b => b.Title.Contains(songBasicTitle))
+            .Where(b => b.Title.Contains(songBasicTitle!) || b.Performers.Contains(songBasicPerformer!))
             .ToList();
         SongBasics.Clear();
         foreach (var song in songs) SongBasics.Add(song);

@@ -5,15 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Muse.UI.View"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="500">
     <Grid>
         <StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding SearchInput}" Height="30" Width="150" Background="Azure"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock Text="Title:" FontSize="15" Height="20" Width="40" TextAlignment="Left"/>
+                <TextBox Text="{Binding TitleInput}"
+                         Height="20" Width="150" ToolTip="Title" Margin="5"/>
+                <TextBlock Text="Performer:" FontSize="15" Height="20" Width="80"
+                           TextAlignment="Left" Margin="20,0,0,0"/>
+                <TextBox Text="{Binding PerformerInput}"
+                         Height="20" Width="150" ToolTip="Performer" Margin="5"/>
                 <Button Content="🔍" Command="{Binding SearchSongCommand}"
-                        Width="30" Height="30"/>
+                        Width="30" Height="30" Margin="5"/>
             </StackPanel>
-            <TextBlock Text="Songs:"/>
+            <TextBlock Text="Songs:" FontSize="15" />
             <DataGrid ItemsSource="{Binding SongBasics}"
                       SelectedItem="{Binding SelectedSongBasic}"
                       CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False"
@@ -25,8 +31,7 @@
                     <DataGridTextColumn Header="Album" Binding="{Binding Album}" Width="5*" />
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock Text="--------------------------------------------------------------"/>
-            <TextBlock Text="SongLyrics:"/>
+            <Border BorderBrush="#fd84b9" BorderThickness="10,10,10,10" Height="5" />            <TextBlock Text="SongLyrics:" FontSize="15" />
             <DataGrid ItemsSource="{Binding SongLyrics}"
                       SelectedItem="{Binding SelectedSongLyric}"
                       CanUserDeleteRows="False" AutoGenerateColumns="False"
