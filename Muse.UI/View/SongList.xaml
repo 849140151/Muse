@@ -29,14 +29,14 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="歌曲" Binding="{Binding Title}" Width="5*" />
-                    <DataGridTextColumn Header="歌手" Binding="{Binding Performers}" Width="5*" />
-                    <DataGridTextColumn Header="时长" Binding="{Binding FormattedDuration}" Width="5*" />
-                    <DataGridTextColumn Header="专辑" Binding="{Binding Album}" Width="5*" />
-                    <DataGridTemplateColumn Header="操作">
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="5*" />
+                    <DataGridTextColumn Header="Performer" Binding="{Binding Performers}" Width="5*" />
+                    <DataGridTextColumn Header="Duration" Binding="{Binding FormattedDuration}" Width="5*" />
+                    <DataGridTextColumn Header="Album" Binding="{Binding Album}" Width="5*" />
+                    <DataGridTemplateColumn Header="Operate">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="播放"
+                                <Button Content="▶"
                                         Command="{Binding DataContext.OnSongDoubleClickCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
