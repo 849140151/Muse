@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using System.Text;
+using HtmlAgilityPack;
 
 namespace Muse.AudioProcessor.Utils;
 
@@ -24,6 +25,9 @@ public class CrawlerUtils
             using (var httpClient = new HttpClient())
             {
                 string html = await httpClient.GetStringAsync(url);
+                // 将html转为byte[]
+                // byte[] htmlBytes = Encoding.UTF8.GetBytes(html);
+                // File.WriteAllBytes("htmlDoc.txt", htmlBytes);
                 var htmlDocument = new HtmlDocument();
                 htmlDocument.LoadHtml(html);
                 return htmlDocument;
