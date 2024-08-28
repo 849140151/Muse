@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using Muse.AudioProcessor.SoundTrackOperator;
+using Muse.AudioProcessor.Utils;
 using Muse.DB.Configuration;
 using Muse.DB.Model;
 using Muse.UI.Utilities;
@@ -78,7 +79,7 @@ public class SongListVM : ViewModelBase
         {
             if (dialog.ShowDialog() != DialogResult.OK) return;
 
-            var audioFiles = CommonFunc.FilterAudioFiles(dialog.SelectedPath);
+            var audioFiles = FileUtils.FilterAudioFiles(dialog.SelectedPath);
             if (!audioFiles.Any())
             {
                 MessageBox.Show("No audio in this folder.", "Lack of audio", MessageBoxButton.OK);
