@@ -14,9 +14,24 @@
                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel>
-                <TextBox Text="{Binding SongTitle}" Margin="2" Width="100" Height="20" FontSize="15"/>
-                <TextBox Text="{Binding SongPerformer}" Margin="2" Width="150" Height="20" FontSize="15"/>
+
+            <Rectangle Width="65" Height="65" RadiusX="10" RadiusY="10">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="{Binding SongCover}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <StackPanel Margin="10,8,0,0">
+                <TextBlock Text="{Binding SongTitle}"
+                           Margin="2" FontSize="17"
+                           Width="100" Height="20"
+                           TextAlignment="Left"
+                           FontWeight="Bold" Foreground="White"/>
+                <TextBlock Text="{Binding SongPerformer}"
+                           Margin="2" FontSize="15"
+                           Width="100" Height="20"
+                           TextAlignment="Left"
+                           Foreground="White"/>
             </StackPanel>
 
 
