@@ -42,7 +42,7 @@ public class MusicencLyricsOperator
                     var newLyric = new SongLyric()
                     {
                         LyricTimeStamp = timestamp,
-                        Japanese = match.Groups["lyric"].Value,
+                        Kanji = match.Groups["lyric"].Value,
                         SongBasicId = songId
                     };
                     _dbContext.SongLyric.Add(newLyric);
