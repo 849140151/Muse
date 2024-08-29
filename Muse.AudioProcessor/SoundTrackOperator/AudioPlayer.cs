@@ -46,7 +46,11 @@ public static class AudioPlayer
 
     private static TimeSpan GetCurrentTime()
     {
-        return AudioFile!.CurrentTime;
+        TimeSpan currentTime = AudioFile!.CurrentTime;
+        // Chop off the milliseconds
+        TimeSpan truncatedTimeSpan = new TimeSpan(currentTime.Hours, currentTime.Minutes, currentTime.Seconds);
+
+        return truncatedTimeSpan;
     }
 
     private static void OnTimerElapsed()
