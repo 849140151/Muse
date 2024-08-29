@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Media.Imaging;
+using Muse.AudioProcessor.SoundTrackOperator;
 using Muse.DB.Configuration;
 using Muse.DB.Model;
 using Muse.UI.Utilities;
@@ -19,9 +20,34 @@ public class LyricVM : ViewModelBase
     {
         _dbContext = dbContext;
         _playBarVm = playBarVm;
+        AudioPlayer.CurrentTimeUpdated += OnCurrentTimeUpdated;
     }
 
+    private TimeSpan _currentTimeStamp;
 
+    public TimeSpan CurrentTimeStamp
+    {
+        get => _currentTimeStamp;
+        set
+        {
+            _currentTimeStamp = value;
+            OnPropertyChanged();
+            // Console.WriteLine(CurrentTimeStamp);
+            // if (_currentTimeStamp == _selectSongLyric.LyricTimeStamp)
+            // {
+            //     Console.WriteLine("1111111111111truehappen");
+            // }
+        }
+    }
+
+    private void OnCurrentTimeUpdated(TimeSpan currentTime)
+    {
+        CurrentTimeStamp = currentTime;
+        InMomentLyric = SongLyrics.FirstOrDefault(l => l.LyricTimeStamp == currentTime).Kanji;
+        // string kanji = SongLyrics.FirstOrDefault(l => l.LyricTimeStamp == currentTime).Kanji;
+        // Console.WriteLine(kanji);
+
+    }
 
     #region Get Lyrics Base on the SongListView Control
 
@@ -88,5 +114,21 @@ public class LyricVM : ViewModelBase
             return bitmap;
         }
     }
+    #endregion
+
+    #region Show the lyric which singing right now
+
+    private string? _inMomentLyric;
+
+    public string? InMomentLyric
+    {
+        get => _inMomentLyric;
+        set
+        {
+            _inMomentLyric = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 }

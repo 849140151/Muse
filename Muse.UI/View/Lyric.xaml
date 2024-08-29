@@ -3,25 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Muse.UI.View"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="622"
              Style="{StaticResource PageStyle}">
     <Grid>
-        <Image Source="{Binding SongCover}"></Image>
-        <ListBox Name="LyricsListBox"
-                 ItemsSource="{Binding SongLyrics}"
-                 ScrollViewer.VerticalScrollBarVisibility="Visible"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 SelectionMode="Single"
-                 SelectedItem="{Binding SelectSongLyric, Mode=TwoWay}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Kanji}" FontSize="16" Padding="5">
-                    </TextBlock>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Image Source="{Binding SongCover}"/>
+        <StackPanel Orientation="Horizontal">
+            <ListBox Name="LyricsListBox"
+                     ItemsSource="{Binding SongLyrics}"
+                     ScrollViewer.VerticalScrollBarVisibility="Visible"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     SelectionMode="Single"
+                     SelectedItem="{Binding SelectSongLyric, Mode=TwoWay}"
+                     Width="300">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="{Binding LyricOrder}" FontSize="16" Padding="5"/>
+                            <TextBlock Text="{Binding Kanji}" FontSize="16" Padding="5"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TextBlock Text="{Binding InMomentLyric}"
+                       Foreground="White"
+                       FontWeight="Bold"
+                       FontSize="17"/>
+        </StackPanel>
+
 
     </Grid>
 </UserControl>

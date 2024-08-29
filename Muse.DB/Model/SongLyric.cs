@@ -23,5 +23,10 @@ public class SongLyric
 
     public string? Chinese { get; set; }
 
+    /// <summary>
+    ///     Show always starts from 1
+    /// </summary>
+    public int LyricOrder { get; set; }
+
 
 }
