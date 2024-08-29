@@ -17,12 +17,7 @@
                  SelectedItem="{Binding SelectSongLyric, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Japanese}" FontSize="16" Padding="5">
-                        <!-- <TextBlock.InputBindings> -->
-                        <!--     <MouseBinding Command="{Binding DataContext.OnSongLyricClickCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" -->
-                        <!--                   CommandParameter="{Binding}" -->
-                        <!--                   MouseAction="LeftClick"/> -->
-                        <!-- </TextBlock.InputBindings> -->
+                    <TextBlock Text="{Binding Kanji}" FontSize="16" Padding="5">
                     </TextBlock>
                 </DataTemplate>
             </ListBox.ItemTemplate>

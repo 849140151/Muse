@@ -15,14 +15,13 @@ public class SongLyric
 
     public TimeSpan LyricTimeStamp { get; set; }
 
-    public string? Kanji { get; set; }
+    public string? Romaji { get; set; }
 
-    public string? RoMaJi { get; set; }
+    public string? Kanji { get; set; }
     
     public string? English { get; set; }
 
     public string? Chinese { get; set; }
-
 
 
 }

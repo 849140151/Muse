@@ -10,8 +10,8 @@ using Muse.DB.Configuration;
 namespace Muse.DB.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240828031819_SongLtric_Add Romaji English")]
-    partial class SongLtric_AddRomajiEnglish
+    [Migration("20240829015830_add_kanji")]
+    partial class add_kanji
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,7 +91,7 @@ namespace Muse.DB.Migrations
                     b.Property<double>("LyricTimeStamp")
                         .HasColumnType("REAL");
 
-                    b.Property<string>("RoMaJi")
+                    b.Property<string>("Romaji")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("SongBasicId")

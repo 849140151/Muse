@@ -5,7 +5,7 @@
 namespace Muse.DB.Migrations
 {
     /// <inheritdoc />
-    public partial class SongLtric_AddRomajiEnglish : Migration
+    public partial class add_kanji : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -13,7 +13,7 @@ namespace Muse.DB.Migrations
             migrationBuilder.RenameColumn(
                 name: "Japanese",
                 table: "SongLyrics",
-                newName: "RoMaJi");
+                newName: "Romaji");
 
             migrationBuilder.AddColumn<string>(
                 name: "English",
@@ -40,7 +40,7 @@ namespace Muse.DB.Migrations
                 table: "SongLyrics");
 
             migrationBuilder.RenameColumn(
-                name: "RoMaJi",
+                name: "Romaji",
                 table: "SongLyrics",
                 newName: "Japanese");
         }
