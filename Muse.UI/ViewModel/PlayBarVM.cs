@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Windows.Media.Imaging;
+using Microsoft.Extensions.DependencyInjection;
 using Muse.AudioProcessor.SoundTrackOperator;
 using Muse.UI.Utilities;
 using TagLib;
@@ -7,6 +8,8 @@ namespace Muse.UI.ViewModel;
 
 public class PlayBarVM : ViewModelBase
 {
+    private readonly IServiceProvider _serviceProvider;
+
     #region Fields and Properties -------------------------------------------------------------------
 
     private bool _isUserDragging = false;
@@ -43,8 +46,9 @@ public class PlayBarVM : ViewModelBase
 
     #endregion of Fields and Properties -------------------------------------------------------------------
 
-    public PlayBarVM()
+    public PlayBarVM(IServiceProvider serviceProvider)
     {
+        _serviceProvider = serviceProvider;
         // Subscribe to the CurrentTimeUpdated event, get the TimeSpan and raise the Event Handler
         AudioPlayer.CurrentTimeUpdated += OnCurrentTimeUpdated;
     }
@@ -88,6 +92,40 @@ public class PlayBarVM : ViewModelBase
 
     #endregion of basic function  -------------------------------------------------------------------
 
+
+    #region Go to next or previous song -------------------------------------------------------------------
+    /// <summary>
+    ///     The command for last and next song
+    ///     By default it would be in a cycle
+    ///     Maybe I can add a random mode later
+    /// </summary>
+
+    public RelayCommand GoNextCommand => new(execute => GoNext(), canExecute => CanUsePlayBar());
+
+    private void GoNext()
+    {
+        // using Lazy Injection, otherwise it will be circular dependency
+        var songListVm = _serviceProvider.GetRequiredService<SongListVM>();
+        int index = songListVm.SongBasic.IndexOf(songListVm.SelectSong!);
+        songListVm.SelectSong = index == songListVm.SongBasic.Count-1 ? songListVm.SongBasic[0] : songListVm.SongBasic[index + 1];
+        songListVm.OnSongDoubleClick();
+    }
+
+
+    public RelayCommand GoLastCommand => new(execute => GoLast(), canExecute => CanUsePlayBar());
+
+    private void GoLast()
+    {
+        // using Lazy Injection, otherwise it will be circular dependency
+        var songListVm = _serviceProvider.GetRequiredService<SongListVM>();
+        int index = songListVm.SongBasic.IndexOf(songListVm.SelectSong!);
+        songListVm.SelectSong = index == 0 ? songListVm.SongBasic[^1] : songListVm.SongBasic[index - 1];
+        songListVm.OnSongDoubleClick();
+    }
+
+
+
+    #endregion
 
     #region Load a new song from outside, Update the header -------------------------------------------------------------------
 

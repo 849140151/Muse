@@ -37,7 +37,7 @@ public class SongListVM : ViewModelBase
         _lyricVm = lyricVm;
         _audioManager = audioManager;
         // Select all songs from database to initialize the song list
-        var songBasics = _dbContext.SongBasic.ToList();
+        var songBasics = _dbContext.SongBasic.OrderBy(s => s.SongBasicId).ToList();
         SongBasic = new ObservableCollection<SongBasic>(songBasics);
     }
 
@@ -45,7 +45,7 @@ public class SongListVM : ViewModelBase
 
     public RelayCommand OnSongDoubleClickCommand => new(execute => OnSongDoubleClick());
 
-    private void OnSongDoubleClick()
+    public void OnSongDoubleClick()
     {
         // Send the LocalUrl to PlayBarVm and play the song
         var selectSongDetail = _dbContext.SongDetail

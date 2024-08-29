@@ -21,35 +21,44 @@
                 </Rectangle.Fill>
             </Rectangle>
 
+            <!-- // Header of the song // -->
             <StackPanel Margin="10,8,0,0">
                 <TextBlock Text="{Binding SongTitle}"
-                           Margin="2" FontSize="17"
+                           Margin="5" FontSize="17"
                            Width="100" Height="20"
                            TextAlignment="Left"
                            FontWeight="Bold" Foreground="White"/>
                 <TextBlock Text="{Binding SongPerformer}"
-                           Margin="2" FontSize="15"
+                           Margin="5" FontSize="15"
                            Width="100" Height="20"
                            TextAlignment="Left"
                            Foreground="White"/>
             </StackPanel>
 
 
-            <!-- // Play and Pause ToggleButton// -->
-            <ToggleButton Width="50" Height="30" Margin="5"
-                          IsChecked="{Binding IsCheckedPlayBtn, Mode=TwoWay}"
-                          Command="{Binding PlayOrPauseCommand}">
-                <ToggleButton.Style>
-                    <Style TargetType="ToggleButton">
-                        <Setter Property="Content" Value="▶"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsChecked" Value="False">
-                                <Setter Property="Content" Value="⏸"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </ToggleButton.Style>
-            </ToggleButton>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="⏮" Command="{Binding GoLastCommand}"
+                        Width="50" Height="30"/>
+                <!-- // Play and Pause ToggleButton// -->
+                <ToggleButton Width="50" Height="30" Margin="5"
+                              IsChecked="{Binding IsCheckedPlayBtn, Mode=TwoWay}"
+                              Command="{Binding PlayOrPauseCommand}">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Setter Property="Content" Value="▶"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="False">
+                                    <Setter Property="Content" Value="⏸"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+
+                <Button Content="⏭" Command="{Binding GoNextCommand}"
+                        Width="50" Height="30"/>
+            </StackPanel>
+
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
 
