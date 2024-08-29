@@ -53,11 +53,6 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                <!-- 写一个右端对齐的TextBlock -->
-
-
-
-
                 <TextBlock Text="{Binding CurrentTimeStamp, StringFormat={}{0:mm\\:ss}}"
                            Margin="2" Width="80" Height="20" FontSize="15"
                            TextAlignment="Right"/>

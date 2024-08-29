@@ -6,7 +6,8 @@
         xmlns:Menu="clr-namespace:Muse.UI.Utilities"
         mc:Ignorable="d"
         Title="Muse" Height="600" Width="850" AllowsTransparency="True" Background="Transparent"
-        WindowStartupLocation="CenterScreen" WindowStyle="None">
+        WindowStartupLocation="CenterScreen" WindowStyle="None"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Grid>
         <!-- Window Border -->
         <Border Background="#f7f7f3" CornerRadius="20,20,50,50" Margin="0"/>
@@ -14,7 +15,7 @@
         <Grid>
             <!-- Base Grid -->
             <Grid.RowDefinitions>
-                <RowDefinition Height="8*"/>
+                <RowDefinition Height="7*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 

@@ -1,6 +1,5 @@
 ﻿using System.Windows;
-using Muse.UI.View;
-using Muse.UI.ViewModel;
+using System.Windows.Input;
 
 namespace Muse.UI;
 
@@ -14,5 +13,10 @@ public partial class MainWindow : Window
     private void CloseAppClick(object sender, RoutedEventArgs e)
     {
         Close();
+    }
+
+    private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (e.ChangedButton == MouseButton.Left) DragMove();
     }
 }
