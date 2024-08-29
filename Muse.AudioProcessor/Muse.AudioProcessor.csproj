@@ -8,6 +8,8 @@
 
     <ItemGroup>
       <PackageReference Include="HtmlAgilityPack" Version="1.11.64" />
+      <PackageReference Include="LibNMeCab" Version="0.10.2" />
+      <PackageReference Include="LibNMeCab.IpaDicBin" Version="0.10.0" />
       <PackageReference Include="NAudio" Version="2.2.1" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
       <PackageReference Include="TagLibSharp" Version="2.3.0" />

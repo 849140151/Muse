@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Media.Imaging;
+using Muse.AudioProcessor.LyricProcessor;
 using Muse.AudioProcessor.SoundTrackOperator;
 using Muse.DB.Configuration;
 using Muse.DB.Model;
@@ -32,11 +33,6 @@ public class LyricVM : ViewModelBase
         {
             _currentTimeStamp = value;
             OnPropertyChanged();
-            // Console.WriteLine(CurrentTimeStamp);
-            // if (_currentTimeStamp == _selectSongLyric.LyricTimeStamp)
-            // {
-            //     Console.WriteLine("1111111111111truehappen");
-            // }
         }
     }
 
@@ -44,8 +40,7 @@ public class LyricVM : ViewModelBase
     {
         CurrentTimeStamp = currentTime;
         InMomentLyric = SongLyrics.FirstOrDefault(l => l.LyricTimeStamp == currentTime).Kanji;
-        // string kanji = SongLyrics.FirstOrDefault(l => l.LyricTimeStamp == currentTime).Kanji;
-        // Console.WriteLine(kanji);
+        ParsedLyric = LyricTokenizer.ParseLyric(InMomentLyric);
 
     }
 
@@ -126,6 +121,21 @@ public class LyricVM : ViewModelBase
         set
         {
             _inMomentLyric = value;
+            OnPropertyChanged();
+        }
+    }
+    #endregion
+
+    #region Parse the lyric
+
+    private string? _parsedLyric;
+
+    public string? ParsedLyric
+    {
+        get => _parsedLyric;
+        set
+        {
+            _parsedLyric = value;
             OnPropertyChanged();
         }
     }

@@ -25,10 +25,18 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <TextBlock Text="{Binding InMomentLyric}"
-                       Foreground="White"
-                       FontWeight="Bold"
-                       FontSize="17"/>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="{Binding InMomentLyric}"
+                           Foreground="White"
+                           FontWeight="Bold"
+                           FontSize="17"/>
+                <TextBlock Text="{Binding ParsedLyric}"
+                           Foreground="Black"
+                           FontWeight="Bold"
+                           FontSize="18"/>
+
+            </StackPanel>
+
         </StackPanel>
 
 
