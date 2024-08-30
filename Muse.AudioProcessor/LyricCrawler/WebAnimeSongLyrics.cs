@@ -21,7 +21,7 @@ public class WebAnimeSongLyrics
         _webUrl = webUrl;
     }
 
-    public string[] NodeArray = { "kanjilyrics", "romajilyrics", "englishlyrics"};
+    private readonly string[] _nodeArray = ["kanjilyrics", "romajilyrics", "englishlyrics"];
 
     public async Task GetRawLyricsAsync()
     {
@@ -32,7 +32,6 @@ public class WebAnimeSongLyrics
     ///     A flag for extract full version lyric
     /// </summary>
     public bool IsOnlyFullVersion { get; set; }
-
 
 
     /// <summary>
@@ -53,16 +52,16 @@ public class WebAnimeSongLyrics
     }
 
 
-    public List<string>? KanjiList { get; set; } = [];
-    public List<string>? RomajiList { get; set; } = [];
-    public List<string>? EnglishList { get; set; } = [];
+    private List<string> KanjiList { get; set; } = [];
+    private List<string> RomajiList { get; set; } = [];
+    private List<string> EnglishList { get; set; } = [];
 
     /// <summary>
     ///     Get all 3 different lyrics and store it in to properties
     /// </summary>
     public void GetLyrics()
     {
-        foreach (string node in NodeArray)
+        foreach (string node in _nodeArray)
         {
             if (_htmlDocument != null)
             {
@@ -72,19 +71,16 @@ public class WebAnimeSongLyrics
                 switch (node)
                 {
                     case "kanjilyrics":
-                        foreach (HtmlNode selfNode in selfNodes) KanjiList.Add(selfNode.InnerText);
+                        foreach (HtmlNode selfNode in selfNodes) KanjiList.Add(selfNode.InnerText.Trim());
                         break;
                     case "romajilyrics":
-                        foreach (HtmlNode selfNode in selfNodes) RomajiList.Add(selfNode.InnerText);
+                        foreach (HtmlNode selfNode in selfNodes) RomajiList.Add(selfNode.InnerText.Trim());
                         break;
                     case "englishlyrics":
-                        foreach (HtmlNode selfNode in selfNodes) EnglishList.Add(selfNode.InnerText);
+                        foreach (HtmlNode selfNode in selfNodes) EnglishList.Add(selfNode.InnerText.Trim());
                         break;
                 }
-
             }
         }
     }
-
-
 }
