@@ -39,8 +39,18 @@ public class LyricVM : ViewModelBase
     private void OnCurrentTimeUpdated(TimeSpan currentTime)
     {
         CurrentTimeStamp = currentTime;
-        InMomentLyric = SongLyrics.FirstOrDefault(l => l.LyricTimeStamp == currentTime).Kanji;
-        ParsedLyric = LyricTokenizer.ParseLyric(InMomentLyric);
+        SongLyric? inMomentSongLyric = SongLyrics.FirstOrDefault(l => l.LyricTimeStamp == currentTime);
+
+
+        if (inMomentSongLyric is null) return;
+        InMomentLyric = inMomentSongLyric.Kanji;
+        ParsedLyric = LyricTokenizer.ParseLyric(InMomentLyric!);
+        // InMomentOrder = inMomentSongLyric.LyricOrder;
+        // Console.WriteLine(InMomentOrder);
+
+        // Console.WriteLine(InMomentLyric);
+        // InMomentLyric = SongLyrics.FirstOrDefault(l => l.LyricTimeStamp == currentTime).Kanji;
+        // ParsedLyric = LyricTokenizer.ParseLyric(InMomentLyric);
 
     }
 
@@ -66,7 +76,7 @@ public class LyricVM : ViewModelBase
         {
             _selectSongLyric = value;
             OnPropertyChanged();
-            OnSelectLyric(value);
+            OnSelectLyric(value!);
         }
     }
 
@@ -136,6 +146,22 @@ public class LyricVM : ViewModelBase
         set
         {
             _parsedLyric = value;
+            OnPropertyChanged();
+        }
+    }
+
+    #endregion
+
+    #region Scorll the view
+
+    private int? _inMomentOrder;
+
+    public int? InMomentOrder
+    {
+        get => _inMomentOrder;
+        set
+        {
+            _inMomentOrder = value;
             OnPropertyChanged();
         }
     }

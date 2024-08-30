@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Muse.UI.View"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="622"
              Style="{StaticResource PageStyle}">
@@ -11,11 +12,12 @@
         <StackPanel Orientation="Horizontal">
             <ListBox Name="LyricsListBox"
                      ItemsSource="{Binding SongLyrics}"
-                     ScrollViewer.VerticalScrollBarVisibility="Visible"
+                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      SelectionMode="Single"
-                     SelectedItem="{Binding SelectSongLyric, Mode=TwoWay}"
-                     Width="300">
+                     SelectedItem="{Binding SelectSongLyric, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                     Width="300"
+                     VerticalAlignment="Top">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="5">
@@ -34,6 +36,9 @@
                            Foreground="Black"
                            FontWeight="Bold"
                            FontSize="18"/>
+                <Button Content="Scroll Up" Click="ScrollUp_Click" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10"/>
+                <Button Content="Scroll Down" Click="ScrollDown_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
+
 
             </StackPanel>
 
