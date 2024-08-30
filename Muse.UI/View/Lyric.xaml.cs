@@ -9,7 +9,6 @@ namespace Muse.UI.View;
 
 public partial class Lyric : UserControl
 {
-    private readonly LyricVM _lyricVm;
 
     public Lyric()
     {
@@ -17,11 +16,6 @@ public partial class Lyric : UserControl
         Loaded += OnLoaded;
     }
 
-    public Lyric(LyricVM _lyricVm)
-    {
-        this._lyricVm = _lyricVm;
-        InitializeComponent();
-    }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
@@ -34,11 +28,11 @@ public partial class Lyric : UserControl
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(LyricVM.InMomentLyric))
-        {
-            Dispatcher.BeginInvoke(new Action(() => ScrollDown_Click(null, null)),
-                System.Windows.Threading.DispatcherPriority.Background);
-        }
+        if (e.PropertyName != nameof(LyricVM.InMomentOrder)) return;
+            Dispatcher.BeginInvoke(
+                new Action(() => ScrollDown_Click(null, null)),
+                System.Windows.Threading.DispatcherPriority.Background
+                );
     }
 
 

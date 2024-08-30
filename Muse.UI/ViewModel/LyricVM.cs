@@ -45,13 +45,8 @@ public class LyricVM : ViewModelBase
         if (inMomentSongLyric is null) return;
         InMomentLyric = inMomentSongLyric.Kanji;
         ParsedLyric = LyricTokenizer.ParseLyric(InMomentLyric!);
-        // InMomentOrder = inMomentSongLyric.LyricOrder;
-        // Console.WriteLine(InMomentOrder);
-
-        // Console.WriteLine(InMomentLyric);
-        // InMomentLyric = SongLyrics.FirstOrDefault(l => l.LyricTimeStamp == currentTime).Kanji;
-        // ParsedLyric = LyricTokenizer.ParseLyric(InMomentLyric);
-
+        // Only scroll the view when InMomentOrder > 5
+        if (inMomentSongLyric.LyricOrder > 5) InMomentOrder = inMomentSongLyric.LyricOrder;
     }
 
     #region Get Lyrics Base on the SongListView Control
