@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Menu="clr-namespace:Muse.UI.Utilities"
         mc:Ignorable="d"
-        Title="Muse" Height="600" Width="850" AllowsTransparency="True" Background="Transparent"
+        Title="Muse" Height="800" Width="1050" AllowsTransparency="True" Background="Transparent"
         WindowStartupLocation="CenterScreen" WindowStyle="None"
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Grid>
@@ -21,7 +21,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="700.5"/>
+                <ColumnDefinition Width="900.5"/>
             </Grid.ColumnDefinitions>
 
             <!-- // Navigation Panel//  -->
